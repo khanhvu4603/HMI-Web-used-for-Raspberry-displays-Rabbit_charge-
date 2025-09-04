@@ -20,42 +20,42 @@ document.addEventListener('keydown', (event) => {
   
   // Nếu đang ở trang 2 và nhấn phím 1
   if (currentPage === 'trang2.html' && event.key === '1') {
-    window.location.href = 'src/pages/trang2_1.html';
+    window.location.href = 'trang2_1.html';
   }
   
   // Nếu đang ở trang 2 và nhấn phím 2
   if (currentPage === 'trang2.html' && event.key === '2') {
-    window.location.href = 'src/pages/trang2_2.html';
+    window.location.href = 'trang2_2.html';
   }
   
   // Nếu đang ở trang 2_1 và nhấn phím 0
   if (currentPage === 'trang2_1.html' && event.key === '0') {
-    window.location.href = 'src/pages/trang2.html';
+    window.location.href = 'trang2.html';
   }
   
   // Nếu đang ở trang 2_2 và nhấn phím 0
   if (currentPage === 'trang2_2.html' && event.key === '0') {
-    window.location.href = 'src/pages/trang2.html';
+    window.location.href = 'trang2.html';
   }
   
   // Nếu đang ở trang 2_1_TTTT và nhấn phím 0
   if (currentPage === 'trang2_1_TTTT.html' && event.key === '0') {
-    window.location.href = 'src/pages/trang2.html';
+    window.location.href = 'trang2.html';
   }
   
   // Nếu đang ở trang 2_1_app và nhấn phím 0
   if (currentPage === 'trang2_1_app.html' && event.key === '0') {
-    window.location.href = 'src/pages/trang2.html';
+    window.location.href = 'trang2.html';
   }
   
   // Nếu đang ở trang 2_2_TTTT và nhấn phím 0
   if (currentPage === 'trang2_2_TTTT.html' && event.key === '0') {
-    window.location.href = 'src/pages/trang2.html';
+    window.location.href = 'trang2.html';
   }
   
   // Nếu đang ở trang 2_2_app và nhấn phím 0
   if (currentPage === 'trang2_2_app.html' && event.key === '0') {
-    window.location.href = 'src/pages/trang2.html';
+    window.location.href = 'trang2.html';
   }
 });
   
