@@ -1,0 +1,92 @@
+/* Cơ bản */
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#2c2c2c;
+  --fg:#ffffff;
+  --arrowSize: clamp(110px, 7vmin, 90px);
+}
+
+html,body{height:100%}
+body{
+  background: var(--bg);
+  color: var(--fg);
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  overflow:hidden;
+}
+
+/* Khung hiển thị chính */
+.stage{
+  position:relative;
+  width:100%;
+  height:100%;
+  display:grid;
+  place-items:center;
+  padding: 10px;               /* chừa mép nhỏ cho ảnh */
+}
+
+/* Ảnh trung tâm – chỉ "dán ảnh" */
+/*.slide-img{
+  max-width: 200%;
+  max-height: 200%;            /* chỉnh kích thước ảnh
+  object-fit: contain;         /* không méo ảnh, co giãn theo màn hình */
+  /* user-select: none;
+  -webkit-user-drag: none;
+} */
+.slide-img{
+  max-width: 100%;
+  max-height: 100%;
+  transform: scale(1.25);  /* Phóng to 120% */
+  object-fit: contain;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+/* Mũi tên điều hướng: chỉ là icon, không có nền/border */
+.nav-arrow{
+  position:absolute;
+  top: 53%;  /* Dịch xuống một xíu từ giữa màn hình */
+  transform: translateY(-50%);  /* Căn giữa chính xác */
+  width: var(--arrowSize);
+  height: var(--arrowSize);
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  padding: 0;
+  opacity: .95;
+  filter: drop-shadow(0 4px 16px rgba(0,0,0,.45));
+  transition: transform .2s ease, opacity .2s ease;
+}
+
+/* Đảm bảo SVG mũi tên giống hệt nhau */
+.nav-arrow svg{
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.nav-arrow path{
+  stroke: white;
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  fill: none;
+}
+.nav-arrow:hover{ transform: translateY(-50%) scale(1.06); opacity:1 }  /* Giữ translateY trong hover */
+.nav-arrow-left{  left: clamp(250px, 2vmin, 18px) }
+.nav-arrow-right{ right: clamp(250px, 2vmin, 18px) }
+
+/* Thời gian realtime (góc phải dưới) */
+.timestamp{
+  position:absolute;
+  right: clamp(90px, 2.4vmin, 50px);
+  bottom: clamp(35px, 2.4vmin, 50px);
+  font-weight: 700;
+  font-size: clamp(14px, 2vmin, 18px);
+  text-shadow: 0 2px 6px rgba(0,0,0,.6);  /* dễ đọc trên ảnh sáng */
+  font-variant-numeric: tabular-nums;
+}
+
+/* Nếu người dùng chọn giảm chuyển động */
+@media (prefers-reduced-motion: reduce){
+  .nav-arrow{ transition:none }
+}
