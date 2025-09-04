@@ -4,21 +4,21 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Trang 1</title>
-  <link rel="stylesheet" href="styles.css"/>
+  <link rel="stylesheet" href="src/assets/css/styles.css"/>
 </head>
 <body>
   <main class="stage">
     <!-- ẢNH TRANG ĐẦU: đổi src theo ảnh của bạn -->
-    <img class="slide-img" src="images/trang1.jpg" alt="Trang hiển thị" />
+    <img class="slide-img" src="src/assets/images/trang1.jpg" alt="Trang hiển thị" />
 
     <!-- Mũi tên trái/phải (chỉ là mũi tên) -->
-    <button class="nav-arrow nav-arrow-left" aria-label="Trang trước" data-goto="trang0.html">
+    <button class="nav-arrow nav-arrow-left" aria-label="Trang trước" data-goto="src/pages/trang0.html">
       <svg viewBox="0 0 24 24" width="100%" height="100%" fill="none">
         <path d="M15 5L8 12l7 7"/>
       </svg>
     </button>
 
-    <button class="nav-arrow nav-arrow-right" aria-label="Trang sau" data-goto="trang2.html">
+    <button class="nav-arrow nav-arrow-right" aria-label="Trang sau" data-goto="src/pages/trang2.html">
       <svg viewBox="0 0 24 24" width="100%" height="100%" fill="none">
         <path d="M9 5l7 7-7 7"/>
       </svg>
@@ -28,6 +28,6 @@
     <div class="timestamp" id="current-time"></div>
   </main>
 
-  <script src="script.js"></script>
+  <script src="src/assets/js/script.js"></script>
 </body>
 </html>
