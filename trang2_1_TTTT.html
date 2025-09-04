@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Trang 2.1 - Thanh toán trực tiếp</title>
+  <link rel="stylesheet" href="styles.css"/>
+</head>
+<body data-page="trang2_1_TTTT">
+  <main class="stage">
+    <!-- ẢNH TRANG 2.1 TTTT: đổi src theo ảnh của bạn -->
+    <img class="slide-img" src="images/trang2_1_TTTT.jpg" alt="Trang 2.1 TTTT" />
+    
+    <!-- Khung A trống (không có nút) -->
+    <div class="khung-a-trong">
+      <img src="images/khung_trong.png" alt="Khung A trống" />
+      <div class="tttt-content">
+        <h2 class="tttt-title">THANH TOÁN TRỰC TIẾP</h2>
+        <h3 class="tttt-subtitle">CHI PHÍ SẠC</h3>
+        <p class="tttt-price">6.000đ/Kwh</p>
+        <div class="input-box" onclick="showKeyboard()">
+          <span class="input-text" id="inputValue">Nhập số tiền</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mũi tên trái/phải (chỉ là mũi tên) -->
+    <button class="nav-arrow nav-arrow-left" aria-label="Trang trước" data-goto="trang2.html">
+      <svg viewBox="0 0 24 24" width="100%" height="100%" fill="none">
+        <path d="M15 5L8 12l7 7"/>
+      </svg>
+    </button>
+
+    <button class="nav-arrow nav-arrow-right" aria-label="Trang sau" data-goto="trang3.html">
+      <svg viewBox="0 0 24 24" width="100%" height="100%" fill="none">
+        <path d="M9 5l7 7-7 7"/>
+      </svg>
+    </button>
+
+    <!-- Thời gian realtime -->
+    <div class="timestamp" id="current-time"></div>
+  </main>
+
+  <!-- Bàn phím ảo -->
+  <div class="keyboard" id="keyboard">
+    <div class="keyboard-row">
+      <div class="keyboard-key" onclick="inputKey('1')">1</div>
+      <div class="keyboard-key" onclick="inputKey('2')">2</div>
+      <div class="keyboard-key" onclick="inputKey('3')">3</div>
+      <div class="keyboard-key" onclick="inputKey('4')">4</div>
+      <div class="keyboard-key" onclick="inputKey('5')">5</div>
+      <div class="keyboard-key" onclick="inputKey('6')">6</div>
+      <div class="keyboard-key" onclick="inputKey('7')">7</div>
+      <div class="keyboard-key" onclick="inputKey('8')">8</div>
+      <div class="keyboard-key" onclick="inputKey('9')">9</div>
+      <div class="keyboard-key" onclick="inputKey('0')">0</div>
+    </div>
+    <div class="keyboard-row">
+      <div class="keyboard-key wide" onclick="backspace()">⌫</div>
+      <div class="keyboard-key wide" onclick="clearInput()">Xóa</div>
+      <div class="keyboard-key wide" onclick="enterInput()">Enter</div>
+    </div>
+    <div class="keyboard-row">
+      <div class="keyboard-key space" onclick="hideKeyboard()">Đóng</div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
