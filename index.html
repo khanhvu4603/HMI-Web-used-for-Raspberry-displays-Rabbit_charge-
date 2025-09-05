@@ -5,6 +5,28 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Trang 1</title>
   <link rel="stylesheet" href="src/assets/css/styles.css"/>
+  <style>
+    /* Ẩn hoàn toàn thanh tiêu đề Chrome App */
+    body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      -webkit-app-region: no-drag;
+    }
+    
+    /* Ẩn thanh tiêu đề */
+    ::-webkit-scrollbar {
+      display: none;
+    }
+    
+    /* Ngăn select text */
+    * {
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
+  </style>
 </head>
 <body>
   <main class="stage">
@@ -28,6 +50,8 @@
     <div class="timestamp" id="current-time"></div>
   </main>
 
+  <script src="src/assets/js/config.js"></script>
+  <script src="src/assets/js/api.js"></script>
   <script src="src/assets/js/script.js"></script>
 </body>
 </html>

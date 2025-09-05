@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Theo dõi sạc</title>
+  <link rel="stylesheet" href="../assets/css/styles.css"/>
+  <style>
+    .monitor-container {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      text-align: center;
+      min-width: 500px;
+      max-width: 600px;
+    }
+
+    .monitor-title {
+      font-size: 24px;
+      font-weight: bold;
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    .status-section {
+      margin-bottom: 20px;
+    }
+
+    .status-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px solid #eee;
+    }
+
+    .status-label {
+      font-size: 16px;
+      font-weight: 500;
+      color: #555;
+    }
+
+    .status-value {
+      font-size: 16px;
+      font-weight: bold;
+      color: #333;
+    }
+
+    .status-charging {
+      color: #28a745;
+    }
+
+    .status-waiting {
+      color: #ffc107;
+    }
+
+    .status-stopped {
+      color: #dc3545;
+    }
+
+    .progress-section {
+      margin: 20px 0;
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 20px;
+      background: #f0f0f0;
+      border-radius: 10px;
+      overflow: hidden;
+      margin: 10px 0;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #28a745, #20c997);
+      transition: width 0.3s ease;
+    }
+
+    .energy-display {
+      font-size: 32px;
+      font-weight: bold;
+      color: #28a745;
+      margin: 20px 0;
+    }
+
+    .time-display {
+      font-size: 18px;
+      color: #666;
+      margin: 10px 0;
+    }
+
+    .control-buttons {
+      margin-top: 20px;
+    }
+
+    .btn-stop {
+      background: #dc3545;
+      color: white;
+      border: none;
+      padding: 12px 30px;
+      font-size: 16px;
+      font-weight: 500;
+      border-radius: 8px;
+      cursor: pointer;
+      margin: 0 10px;
+    }
+
+    .btn-stop:hover {
+      background: #c82333;
+    }
+
+    .btn-back {
+      background: #6c757d;
+      color: white;
+      border: none;
+      padding: 12px 30px;
+      font-size: 16px;
+      font-weight: 500;
+      border-radius: 8px;
+      cursor: pointer;
+      margin: 0 10px;
+    }
+
+    .btn-back:hover {
+      background: #5a6268;
+    }
+
+    .loading {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border: 3px solid #f3f3f3;
+      border-top: 3px solid #007bff;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .error-message {
+      color: #dc3545;
+      font-size: 14px;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <main class="stage">
+    <!-- ẢNH NỀN: có thể thay đổi theo thiết kế -->
+    <img class="slide-img" src="../assets/images/trang1.jpg" alt="Trang theo dõi sạc" />
+
+    <!-- Container theo dõi -->
+    <div class="monitor-container">
+      <h2 class="monitor-title">Theo dõi quá trình sạc</h2>
+      
+      <div class="status-section">
+        <div class="status-item">
+          <span class="status-label">Trạng thái:</span>
+          <span id="chargingStatus" class="status-value status-waiting">Đang kết nối...</span>
+        </div>
+        <div class="status-item">
+          <span class="status-label">Công suất:</span>
+          <span id="currentPower" class="status-value">0 kW</span>
+        </div>
+        <div class="status-item">
+          <span class="status-label">Điện năng đã sạc:</span>
+          <span id="energyDelivered" class="status-value">0 kWh</span>
+        </div>
+        <div class="status-item">
+          <span class="status-label">Thời gian sạc:</span>
+          <span id="chargingTime" class="status-value">00:00:00</span>
+        </div>
+        <div class="status-item">
+          <span class="status-label">Chi phí:</span>
+          <span id="totalCost" class="status-value">0 VND</span>
+        </div>
+      </div>
+
+      <div class="progress-section">
+        <div class="energy-display" id="energyDisplay">0.0 kWh</div>
+        <div class="progress-bar">
+          <div id="progressFill" class="progress-fill" style="width: 0%"></div>
+        </div>
+        <div class="time-display" id="timeDisplay">Bắt đầu sạc...</div>
+      </div>
+
+      <div class="control-buttons">
+        <button id="btnStop" class="btn-stop" style="display: none;">Dừng sạc</button>
+        <button id="btnBack" class="btn-back">Quay lại</button>
+      </div>
+
+      <div id="errorMessage" class="error-message" style="display: none;"></div>
+    </div>
+
+    <!-- Thời gian realtime -->
+    <div class="timestamp" id="current-time"></div>
+  </main>
+
+  <script src="../assets/js/config.js"></script>
+  <script src="../assets/js/api.js"></script>
+  <script>
+  (function () {
+    const chargingStatus = document.getElementById('chargingStatus');
+    const currentPower = document.getElementById('currentPower');
+    const energyDelivered = document.getElementById('energyDelivered');
+    const chargingTime = document.getElementById('chargingTime');
+    const totalCost = document.getElementById('totalCost');
+    const energyDisplay = document.getElementById('energyDisplay');
+    const progressFill = document.getElementById('progressFill');
+    const timeDisplay = document.getElementById('timeDisplay');
+    const btnStop = document.getElementById('btnStop');
+    const btnBack = document.getElementById('btnBack');
+    const errorMessage = document.getElementById('errorMessage');
+
+    let ticketId = null;
+    let sessionId = null;
+    let pollTimer = null;
+    let startTime = null;
+    let chargingInterval = null;
+
+    // Khởi tạo
+    function init() {
+      ticketId = Store.getTicketId();
+      sessionId = Store.getSessionId();
+      
+      if (!ticketId) {
+        showError('Không tìm thấy thông tin ticket');
+        return;
+      }
+
+      // Bắt đầu theo dõi
+      startMonitoring();
+    }
+
+    function showError(message) {
+      errorMessage.textContent = message;
+      errorMessage.style.display = 'block';
+      chargingStatus.textContent = 'Lỗi';
+      chargingStatus.className = 'status-value status-stopped';
+    }
+
+    function hideError() {
+      errorMessage.style.display = 'none';
+    }
+
+    function updateStatus(status, className = '') {
+      chargingStatus.textContent = status;
+      chargingStatus.className = `status-value ${className}`;
+    }
+
+    function startMonitoring() {
+      // Polling trạng thái session
+      pollTimer = setInterval(async () => {
+        try {
+          if (sessionId) {
+            const session = await API.getSessionDetail(sessionId);
+            updateSessionUI(session);
+          } else {
+            // Tìm session theo ticket
+            const sessions = await API.getSessionByTicket(ticketId);
+            if (sessions && sessions.length > 0) {
+              sessionId = sessions[0].id;
+              Store.setSessionId(sessionId);
+              updateSessionUI(sessions[0]);
+            }
+          }
+        } catch (error) {
+          console.warn('Polling session error:', error);
+          showError('Không thể kết nối đến server');
+        }
+      }, window.HMI_CONFIG.POLL_SESSION_MS);
+
+      // Cập nhật thời gian sạc
+      startTime = new Date();
+      chargingInterval = setInterval(updateChargingTime, 1000);
+    }
+
+    function updateSessionUI(session) {
+      hideError();
+      
+      // Cập nhật trạng thái
+      switch (session.status) {
+        case 'charging':
+          updateStatus('Đang sạc', 'status-charging');
+          btnStop.style.display = 'inline-block';
+          break;
+        case 'connected':
+          updateStatus('Đã kết nối', 'status-waiting');
+          break;
+        case 'disconnected':
+          updateStatus('Đã ngắt kết nối', 'status-stopped');
+          btnStop.style.display = 'none';
+          break;
+        case 'completed':
+          updateStatus('Hoàn thành', 'status-charging');
+          btnStop.style.display = 'none';
+          break;
+        default:
+          updateStatus('Chờ kết nối', 'status-waiting');
+      }
+
+      // Cập nhật dữ liệu
+      currentPower.textContent = `${session.currentPower || 0} kW`;
+      energyDelivered.textContent = `${(session.energyDelivered || 0).toFixed(2)} kWh`;
+      totalCost.textContent = `${(session.totalCost || 0).toLocaleString()} VND`;
+
+      // Cập nhật progress bar (giả sử mục tiêu 50 kWh)
+      const targetEnergy = 50;
+      const progress = Math.min((session.energyDelivered || 0) / targetEnergy * 100, 100);
+      progressFill.style.width = `${progress}%`;
+
+      // Cập nhật hiển thị năng lượng
+      energyDisplay.textContent = `${(session.energyDelivered || 0).toFixed(1)} kWh`;
+    }
+
+    function updateChargingTime() {
+      if (!startTime) return;
+      
+      const now = new Date();
+      const diff = now - startTime;
+      
+      const hours = Math.floor(diff / 3600000);
+      const minutes = Math.floor((diff % 3600000) / 60000);
+      const seconds = Math.floor((diff % 60000) / 1000);
+      
+      const timeString = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+      chargingTime.textContent = timeString;
+      
+      timeDisplay.textContent = `Sạc trong ${timeString}`;
+    }
+
+    // Event handlers
+    btnStop.addEventListener('click', async () => {
+      try {
+        if (sessionId) {
+          await API.stopCharging({
+            sessionId: sessionId,
+            chargePointId: Store.getChargePointId() || 'CP-001',
+            connectorId: Store.getConnectorId() || 1
+          });
+        }
+        
+        // Dừng monitoring
+        clearInterval(pollTimer);
+        clearInterval(chargingInterval);
+        
+        updateStatus('Đã dừng', 'status-stopped');
+        btnStop.style.display = 'none';
+        
+        // Chuyển về trang chính sau 3 giây
+        setTimeout(() => {
+          // Xác định đường dẫn chính xác
+          const currentPath = window.location.pathname;
+          let homePath = '../../index.html';
+          
+          if (currentPath.includes('/src/pages/')) {
+            homePath = '../../index.html';
+          } else if (currentPath.includes('/src/')) {
+            homePath = '../index.html';
+          } else {
+            homePath = 'index.html';
+          }
+          
+          window.location.href = homePath;
+        }, 3000);
+        
+      } catch (error) {
+        console.error('Stop charging error:', error);
+        showError('Không thể dừng sạc');
+      }
+    });
+
+    btnBack.addEventListener('click', () => {
+      // Dừng monitoring
+      clearInterval(pollTimer);
+      clearInterval(chargingInterval);
+      
+      // Xác định đường dẫn chính xác
+      const currentPath = window.location.pathname;
+      let homePath = '../../index.html';
+      
+      if (currentPath.includes('/src/pages/')) {
+        homePath = '../../index.html';
+      } else if (currentPath.includes('/src/')) {
+        homePath = '../index.html';
+      } else {
+        homePath = 'index.html';
+      }
+      
+      // Chuyển về trang chính
+      window.location.href = homePath;
+    });
+
+    // Xử lý phím
+    document.addEventListener('keydown', (event) => {
+      if (event.key === '0') {
+        btnBack.click();
+      } else if (event.key === 'Escape') {
+        btnStop.click();
+      }
+    });
+
+    // Khởi tạo khi load trang
+    init();
+
+  })();
+  </script>
+</body>
+</html>

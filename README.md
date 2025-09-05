@@ -1,116 +1,172 @@
-# HMI Web Starter - EV Charging Station Interface
+# HMI Thanh Toán Tự Động - Kiosk App
 
-A responsive web interface designed for EV charging stations with Raspberry Pi displays.
+Hệ thống giao diện người dùng (HMI) cho trạm sạc xe điện với chế độ kiosk tự động.
 
-## Features
+## 🚀 Khởi động nhanh
 
-- **Multi-page Navigation**: Navigate between different charging station screens
-- **Keyboard Navigation**: Use number keys (0, 1, 2) for quick navigation
-- **Virtual Keyboard**: Touch-friendly number input with auto-formatting
-- **Payment Integration**: Direct payment and app-based payment options
-- **Responsive Design**: Optimized for various screen sizes
-- **Real-time Clock**: Live timestamp display
+### Windows
+```bash
+# Cách 1: Kiosk Mode (Khuyến nghị)
+start-kiosk.bat
 
-## Project Structure
+# Cách 2: Simple Mode
+start-simple.bat
+```
+
+### Linux/Raspberry Pi
+```bash
+# Cấp quyền thực thi
+chmod +x *.sh
+
+# Cài đặt tự động
+./install-raspberry.sh
+
+# Khởi động
+./start-kiosk.sh
+```
+
+## 📁 Cấu trúc dự án
 
 ```
 hmi-web-starter/
+├── index.html                    # Trang chính
 ├── src/
-│   ├── pages/           # HTML pages
-│   │   ├── index.html   # Main page
-│   │   ├── trang0.html  # Page 0
-│   │   ├── trang2.html  # Page 2 (main charging interface)
-│   │   ├── trang2_1.html # Page 2.1 (charging options)
-│   │   ├── trang2_1_TTTT.html # Direct payment page
-│   │   ├── trang2_1_app.html  # App payment page
-│   │   └── ...
 │   ├── assets/
-│   │   ├── css/         # Stylesheets
-│   │   │   └── styles.css
-│   │   ├── js/          # JavaScript files
-│   │   │   └── script.js
-│   │   └── images/      # Images and icons
-│   └── components/      # Reusable components
-├── index.html           # Entry point
-├── package.json         # Project configuration
-└── README.md           # This file
+│   │   ├── css/
+│   │   │   └── styles.css        # CSS chính
+│   │   ├── js/
+│   │   │   ├── script.js         # JavaScript chính
+│   │   │   ├── config.js         # Cấu hình
+│   │   │   └── api.js            # API functions
+│   │   └── images/               # Ảnh giao diện
+│   └── pages/                    # Các trang con
+├── start-kiosk.bat              # Script khởi động kiosk
+├── start-simple.bat             # Script khởi động đơn giản
+├── manifest.json                # Chrome app manifest
+└── background.js                # Chrome app background
 ```
 
-## Navigation
+## 🎯 Navigation Flow
 
-### Main Navigation
-- **Arrow Keys**: Navigate between main pages (0, 1, 2, 3)
-- **Number Keys**: Quick access to sub-pages
-  - Press `1` on Page 2 → Go to Page 2.1
-  - Press `2` on Page 2 → Go to Page 2.2
-  - Press `0` on any sub-page → Return to Page 2
-
-### Payment Flow
-1. Navigate to Page 2
-2. Press `1` or `2` to select charging port
-3. Choose payment method:
-   - **Direct Payment**: Enter amount with virtual keyboard
-   - **App Payment**: Use Rabbit EVC app
-
-## Installation
-
-1. Clone the repository:
-```bash
-git clone https://github.com/khanhvu4603/HMI-Web-used-for-Raspberry-displays-Rabbit_charge-.git
-cd hmi-web-starter
+```
+index → trang2 → trang3 → trang0 → index
 ```
 
-2. Start the development server:
-```bash
-npm start
-# or
-python -m http.server 8000
-```
+### Phím tắt
 
-3. Open your browser and navigate to `http://localhost:8000`
+**Trang 2:**
+- Phím `1` → trang2_1 (khung A)
+- Phím `2` → trang2_2 (khung B)
 
-## Usage
+**Trang con:**
+- Phím `0` → về trang2
 
-### For Raspberry Pi
-1. Install a web browser (Chromium recommended)
-2. Set the browser to fullscreen mode
-3. Configure auto-start on boot
-4. Point to the local server
+**Chuyển đổi giữa TTTT:**
+- `trang2_1_TTTT` + phím `2` → `trang2_2_TTTT`
+- `trang2_2_TTTT` + phím `1` → `trang2_1_TTTT`
 
-### For Development
-1. Use `npm run dev` for development server
-2. Use `npm run serve` for production-like testing
+## 🖥️ Các trang
 
-## Customization
+### Trang chính
+- **index.html** - Trang chính (ảnh trang1.jpg)
+- **trang2.html** - Trang 2 (ảnh trang2.jpg)
+- **trang3.html** - Trang 3 (ảnh trang3.jpg)
+- **trang0.html** - Trang 0 (ảnh trang0.jpg)
 
-### Adding New Pages
-1. Create HTML file in `src/pages/`
-2. Update navigation in `src/assets/js/script.js`
-3. Add corresponding CSS in `src/assets/css/styles.css`
+### Trang con trang 2
+- **trang2_1.html** - Trang 2.1 (khung A)
+- **trang2_1_TTTT.html** - Thanh toán trực tiếp 2.1
+- **trang2_1_app.html** - App Rabbit EVC 2.1
+- **trang2_2.html** - Trang 2.2 (khung B)
+- **trang2_2_TTTT.html** - Thanh toán trực tiếp 2.2
+- **trang2_2_app.html** - App Rabbit EVC 2.2
 
-### Modifying Payment Options
-1. Edit payment buttons in `trang2_1.html` and `trang2_2.html`
-2. Update virtual keyboard in `script.js`
-3. Customize payment flow as needed
+### Trang thanh toán
+- **payment.html** - Trang thanh toán
+- **monitor.html** - Trang giám sát
 
-## Browser Support
+## ⌨️ Bàn phím ảo
 
-- Chrome/Chromium (Recommended for Raspberry Pi)
-- Firefox
-- Safari
-- Edge
+**Chức năng:**
+- Click vào ô nhập số tiền → Hiện bàn phím ảo
+- Nhập số → Format với dấu phẩy
+- ⌫ → Xóa ký tự cuối
+- Xóa → Xóa toàn bộ
+- Enter → Chốt số tiền
+- Đóng → Ẩn bàn phím
 
-## License
+## 🔧 Cài đặt
 
-MIT License - see LICENSE file for details
+### Windows
+**Yêu cầu:**
+- Windows 10/11
+- Google Chrome
+- Python 3.x
 
-## Contributing
+**Cài đặt:**
+1. Tải và cài đặt [Google Chrome](https://www.google.com/chrome/)
+2. Tải và cài đặt [Python](https://www.python.org/downloads/)
+3. Clone hoặc tải project này
+4. Chạy `start-kiosk.bat`
 
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Submit a pull request
+### Linux/Raspberry Pi
+**Yêu cầu:**
+- Ubuntu 20.04+ hoặc Raspberry Pi OS
+- Chromium/Chrome
+- Python 3.x
 
-## Support
+**Cài đặt:**
+1. Clone project: `git clone <repo-url>`
+2. Chạy script cài đặt: `./install-raspberry.sh`
+3. Khởi động: `./start-kiosk.sh`
 
-For issues and questions, please create an issue on GitHub.
+**Chi tiết:** Xem [RASPBERRY_PI_GUIDE.md](RASPBERRY_PI_GUIDE.md)
+
+## 🎮 Sử dụng
+
+### Khởi động Kiosk Mode
+1. Chạy `start-kiosk.bat`
+2. Ứng dụng sẽ tự động mở Chrome ở chế độ kiosk
+3. Để thoát: Nhấn `Alt + F4`
+
+### Điều hướng
+- **Mũi tên trái/phải**: Chuyển trang
+- **Phím số**: Điều hướng nhanh
+- **Click**: Tương tác với giao diện
+
+## 🎨 Tùy chỉnh
+
+### Thay đổi ảnh
+- Thay thế file ảnh trong `src/assets/images/`
+- Đảm bảo tên file trùng với tên trang
+
+### Thay đổi layout
+- Chỉnh sửa `src/assets/css/styles.css`
+- Khung A: `top: 19.8%; left: 21.3%`
+- Khung B: `top: 19.6%; right: 21.2%`
+
+### Thay đổi logic
+- Chỉnh sửa `src/assets/js/script.js`
+- Thêm phím tắt mới trong event listener
+
+## 🐛 Troubleshooting
+
+### Chrome không mở
+- Kiểm tra Chrome đã cài đặt chưa
+- Thử chạy `start-simple.bat`
+
+### Port 8080 bị chiếm
+- Script sẽ tự động kill process cũ
+- Hoặc thay đổi port trong script
+
+### Bàn phím ảo không hiện
+- Kiểm tra JavaScript console (F12)
+- Đảm bảo file script.js được load
+
+## 📝 License
+
+MIT License - Xem file LICENSE để biết thêm chi tiết.
+
+## 🤝 Hỗ trợ
+
+Nếu gặp vấn đề, vui lòng tạo issue hoặc liên hệ team phát triển.
