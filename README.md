@@ -169,4 +169,4 @@ MIT License - Xem file LICENSE để biết thêm chi tiết.
 
 ## 🤝 Hỗ trợ
 
-Nếu gặp vấn đề, vui lòng tạo issue hoặc liên hệ team phát triển.
+Nếu gặp vấn đề, vui lòng tạo issue hoặc liên hệ: khanhvu4603@gmail.com
