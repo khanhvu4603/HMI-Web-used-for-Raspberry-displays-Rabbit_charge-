@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dual - A: Buttons, B: Charging</title>
+    <link rel="stylesheet" href="../assets/css/styles.css">
+</head>
+<body data-page="trang2_dual_ButtonsA_ChargingB.html">
+    <!-- Khung A: Nút thanh toán -->
+    <div class="khung-a-trong">
+        <div class="brain-icon">
+            <img src="../assets/images/brain-icon.png" alt="Brain Icon">
+        </div>
+        <div class="button-container" style="display: flex; flex-direction: column; gap: 30px; align-items: center; justify-content: center; height: 80%; padding: 20px;">
+            <button class="payment-button direct" id="directPaymentButtonA" style="width: 280px; height: 60px; font-size: 18px; font-weight: bold; color: white; border: none; border-radius: 12px; cursor: pointer; background-color: #28a745;">
+                Sạc thanh toán trực tiếp
+            </button>
+            <button class="payment-button app" id="appPaymentButtonA" style="width: 280px; height: 60px; font-size: 18px; font-weight: bold; color: white; border: none; border-radius: 12px; cursor: pointer; background-color: #007bff;">
+                Sạc qua app Rabbit EVC
+            </button>
+        </div>
+    </div>
+
+    <!-- Khung B: Trạng thái đang sạc -->
+    <div class="khung-b-trong">
+        <div class="brain-icon">
+            <img src="../assets/images/brain-icon.png" alt="Brain Icon">
+        </div>
+        <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; text-align: center;">
+            <img src="../assets/images/gifmaker_me.gif" alt="Đang sạc" style="width: 200px; height: 200px; object-fit: contain; margin-bottom: 20px;">
+            <h3 style="color: #28a745; font-size: 20px; margin: 10px 0;">ĐANG SẠC</h3>
+            <p style="color: #666; font-size: 16px; margin: 5px 0;">Trạng thái: Đang hoạt động</p>
+        </div>
+    </div>
+
+    <style>
+        .payment-button:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+            transition: all 0.3s ease;
+        }
+    </style>
+
+    <script src="../assets/js/store.js"></script>
+    <script src="../assets/js/api.js"></script>
+    <script src="../assets/js/script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const directPaymentButtonA = document.getElementById('directPaymentButtonA');
+            const appPaymentButtonA = document.getElementById('appPaymentButtonA');
+
+            // Event listeners for buttons in Khung A
+            directPaymentButtonA.addEventListener('click', () => {
+                window.location.href = 'trang2_dual_TrangThaiDangSac_B.html';
+            });
+
+            appPaymentButtonA.addEventListener('click', () => {
+                window.location.href = 'trang2_dual_app.html';
+            });
+        });
+    </script>
+</body>
+</html>

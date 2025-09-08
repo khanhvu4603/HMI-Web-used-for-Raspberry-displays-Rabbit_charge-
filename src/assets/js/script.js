@@ -189,6 +189,170 @@ document.addEventListener('keydown', (event) => {
   if (currentPage === 'trang2_2_app.html' && event.key === '1') {
     window.location.href = 'trang2_dual_app.html';
   }
+  
+  // Chuyển từ trang 2_1_TTTT sang trang 2_1_TrangThaiSac (phím 4) - sau khi hiện QR
+  if (currentPage === 'trang2_1_TTTT.html' && event.key === '4') {
+    window.location.href = 'trang2_1_TrangThaiSac.html';
+  }
+  
+  // Chuyển từ trang 2_2_TTTT sang trang 2_2_TrangThaiSac (phím 4) - sau khi hiện QR
+  if (currentPage === 'trang2_2_TTTT.html' && event.key === '4') {
+    window.location.href = 'trang2_2_TrangThaiSac.html';
+  }
+  
+  // Chuyển từ trang 2_2_TTTT sang trang 2_2_TrangThaiSac (phím 5) - sau khi hiện QR
+  if (currentPage === 'trang2_2_TTTT.html' && event.key === '5') {
+    window.location.href = 'trang2_2_TrangThaiSac.html';
+  }
+  
+  // Chuyển từ trang 2_1 sang trang 2_dual (phím 2) - hiển thị cả hai khung cơ bản
+  if (currentPage === 'trang2_1.html' && event.key === '2') {
+    window.location.href = 'trang2_dual.html';
+  }
+  
+  // Chuyển từ trang 2_1_TTTT sang trang 2_dual_QR_Buttons_B (phím 2) - khung A có QR, khung B có nút thanh toán
+  if (currentPage === 'trang2_1_TTTT.html' && event.key === '2') {
+    window.location.href = 'trang2_dual_QR_Buttons_B.html';
+  }
+  
+  // Chuyển từ trang 2_1_TTTT sang trang 2_dual_TTTT_Buttons_B (phím 1) - khung A có nút thanh toán, khung B TTTT
+  if (currentPage === 'trang2_1_TTTT.html' && event.key === '1') {
+    window.location.href = 'trang2_dual_TTTT_Buttons_B.html';
+  }
+  
+  // Chuyển từ trang 2_1_TrangThaiSac sang trang 2_dual_TrangThaiDangSac_A (phím 2) - khung A đang sạc, khung B có nút thanh toán
+  if (currentPage === 'trang2_1_TrangThaiSac.html' && event.key === '2') {
+    window.location.href = 'trang2_dual_TrangThaiDangSac_A.html';
+  }
+  
+  // Chuyển từ trang 2_2 sang trang 2_dual (phím 1) - hiển thị cả hai khung cơ bản
+  if (currentPage === 'trang2_2.html' && event.key === '1') {
+    window.location.href = 'trang2_dual.html';
+  }
+  
+  // Chuyển từ trang 2_2_TTTT sang trang 2_dual_TTTT_Buttons_B (phím 1) - khung A có nút thanh toán, khung B TTTT
+  if (currentPage === 'trang2_2_TTTT.html' && event.key === '1') {
+    window.location.href = 'trang2_dual_TTTT_Buttons_B.html';
+  }
+  
+  // Chuyển từ trang 2_2_TrangThaiSac sang trang 2_dual_TrangThaiDangSac_B (phím 1) - khung A có nút thanh toán, khung B đang sạc
+  if (currentPage === 'trang2_2_TrangThaiSac.html' && event.key === '1') {
+    window.location.href = 'trang2_dual_TrangThaiDangSac_B.html';
+  }
+  
+  // Chuyển từ trang 2_dual_TrangThaiDangSac về trang đơn lẻ (phím 0)
+  if (currentPage === 'trang2_dual_TrangThaiDangSac.html' && event.key === '0') {
+    // Có thể quay về trang2.html hoặc trang trước đó
+    window.location.href = 'trang2.html';
+  }
+  
+  // Chuyển từ trang 2_dual_TrangThaiDangSac sang trang 2_1_TrangThaiSac (phím 1)
+  if (currentPage === 'trang2_dual_TrangThaiDangSac.html' && event.key === '1') {
+    window.location.href = 'trang2_1_TrangThaiSac.html';
+  }
+  
+  // Chuyển từ trang 2_dual_TrangThaiDangSac sang trang 2_2_TrangThaiSac (phím 2)
+  if (currentPage === 'trang2_dual_TrangThaiDangSac.html' && event.key === '2') {
+    window.location.href = 'trang2_2_TrangThaiSac.html';
+  }
+  
+  // Chuyển từ trang 2_dual_TrangThaiDangSac_A về trang 2_1_TrangThaiSac (phím 1)
+  if (currentPage === 'trang2_dual_TrangThaiDangSac_A.html' && event.key === '1') {
+    window.location.href = 'trang2_1_TrangThaiSac.html';
+  }
+  
+  // Chuyển từ trang 2_dual_TrangThaiDangSac_A về trang2.html (phím 0)
+  if (currentPage === 'trang2_dual_TrangThaiDangSac_A.html' && event.key === '0') {
+    window.location.href = 'trang2.html';
+  }
+  
+  // Chuyển từ trang 2_dual_TrangThaiDangSac_B về trang 2_2_TrangThaiSac (phím 2)
+  if (currentPage === 'trang2_dual_TrangThaiDangSac_B.html' && event.key === '2') {
+    window.location.href = 'trang2_2_TrangThaiSac.html';
+  }
+  
+  // Chuyển từ trang 2_dual_TrangThaiDangSac_B về trang2.html (phím 0)
+  if (currentPage === 'trang2_dual_TrangThaiDangSac_B.html' && event.key === '0') {
+    window.location.href = 'trang2.html';
+  }
+  
+  // Chuyển từ trang 2_dual_TrangThaiDangSac_A sang trang2_dual_TrangThaiDangSac (phím 5) - khi đang hiển thị QR
+  if (currentPage === 'trang2_dual_TrangThaiDangSac_A.html' && event.key === '5') {
+    window.location.href = 'trang2_dual_TrangThaiDangSac.html';
+  }
+  
+  // Chuyển từ trang 2_dual_TrangThaiDangSac_B sang trang2_dual_TrangThaiDangSac (phím 5) - khi đang hiển thị QR
+  if (currentPage === 'trang2_dual_TrangThaiDangSac_B.html' && event.key === '5') {
+    window.location.href = 'trang2_dual_TrangThaiDangSac.html';
+  }
+  
+  // Chuyển từ trang 2_dual_TTTT_Buttons_A sang trang 2_dual_TTTT_Buttons_B (phím 2)
+  if (currentPage === 'trang2_dual_TTTT_Buttons_A.html' && event.key === '2') {
+    window.location.href = 'trang2_dual_TTTT_Buttons_B.html';
+  }
+  
+  // Chuyển từ trang 2_dual_TTTT_Buttons_A về trang 2_1_TTTT (phím 1)
+  if (currentPage === 'trang2_dual_TTTT_Buttons_A.html' && event.key === '1') {
+    window.location.href = 'trang2_1_TTTT.html';
+  }
+  
+  // Chuyển từ trang 2_dual_TTTT_Buttons_A về trang2.html (phím 0)
+  if (currentPage === 'trang2_dual_TTTT_Buttons_A.html' && event.key === '0') {
+    window.location.href = 'trang2.html';
+  }
+  
+  // Chuyển từ trang 2_dual_TTTT_Buttons_B sang trang 2_dual_TTTT_Buttons_A (phím 1)
+  if (currentPage === 'trang2_dual_TTTT_Buttons_B.html' && event.key === '1') {
+    window.location.href = 'trang2_dual_TTTT_Buttons_A.html';
+  }
+  
+  // Chuyển từ trang 2_dual_TTTT_Buttons_B về trang 2_2_TTTT (phím 2)
+  if (currentPage === 'trang2_dual_TTTT_Buttons_B.html' && event.key === '2') {
+    window.location.href = 'trang2_2_TTTT.html';
+  }
+  
+  // Chuyển từ trang 2_dual_TTTT_Buttons_B về trang2.html (phím 0)
+  if (currentPage === 'trang2_dual_TTTT_Buttons_B.html' && event.key === '0') {
+    window.location.href = 'trang2.html';
+  }
+  
+  // Navigation cho trang 2_dual_QR_Buttons_B
+  if (currentPage === 'trang2_dual_QR_Buttons_B.html' && event.key === '0') {
+    window.location.href = 'trang2.html';
+  }
+  
+  if (currentPage === 'trang2_dual_QR_Buttons_B.html' && event.key === '1') {
+    window.location.href = 'trang2_1_TTTT.html';
+  }
+  
+  // Navigation từ trang có QR ở khung A, nhấn phím 4 → A charging, B buttons
+  if (currentPage === 'trang2_dual_QR_Buttons_B.html' && event.key === '4') {
+    window.location.href = 'trang2_dual_ChargingA_ButtonsB.html';
+  }
+  
+  // Navigation từ trang có QR ở khung B, nhấn phím 5 → A buttons, B charging  
+  if (currentPage === 'trang2_dual_QR_Buttons_A.html' && event.key === '5') {
+    window.location.href = 'trang2_dual_ButtonsA_ChargingB.html';
+  }
+  
+  // Navigation cho trang 2_dual_ChargingA_ButtonsB
+  if (currentPage === 'trang2_dual_ChargingA_ButtonsB.html' && event.key === '0') {
+    window.location.href = 'trang2.html';
+  }
+  
+  if (currentPage === 'trang2_dual_ChargingA_ButtonsB.html' && event.key === '2') {
+    window.location.href = 'trang2_dual_TrangThaiDangSac_A.html';
+  }
+  
+  // Navigation cho trang 2_dual_ButtonsA_ChargingB
+  if (currentPage === 'trang2_dual_ButtonsA_ChargingB.html' && event.key === '0') {
+    window.location.href = 'trang2.html';
+  }
+  
+  if (currentPage === 'trang2_dual_ButtonsA_ChargingB.html' && event.key === '1') {
+    window.location.href = 'trang2_dual_TrangThaiDangSac_B.html';
+  }
+  
 });
   
   // Thời gian realtime (dd/mm/yy hh:mm:ss), cập nhật mỗi giây

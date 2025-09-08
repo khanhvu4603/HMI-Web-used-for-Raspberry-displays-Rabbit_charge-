@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Trang 2 - Cả hai khung</title>
+  <title>Trang 2 Dual - Trạng thái đang sạc</title>
   <link rel="stylesheet" href="../assets/css/styles.css"/>
   <style>
     /* Container cho hiển thị cả hai khung */
@@ -17,8 +17,8 @@
     .khung-a-trong {
       position: absolute;
       top: 19.8%;
-      left: 21.3%;
-      width: 30%;
+      left: 22.15%;
+      width: 28%;
       height: 71.5%;
       z-index: 10;
     }
@@ -27,36 +27,30 @@
     .khung-b-trong {
       position: absolute;
       top: 19.6%;
-      right: 21.2%;
-      width: 30%;
+      right: 22.2%;
+      width: 28%;
       height: 71.5%;
       z-index: 10;
     }
   </style>
 </head>
-<body data-page="trang2_dual">
+<body data-page="trang2_dual_TrangThaiDangSac">
   <main class="stage">
     <!-- ẢNH NỀN: sử dụng ảnh trang2.jpg -->
-    <img class="slide-img" src="../assets/images/trang2.jpg" alt="Trang 2 - Cả hai khung" />
+    <img class="slide-img" src="../assets/images/trang2.jpg" alt="Trang 2 Dual - Trạng thái đang sạc" />
     
     <!-- Container chứa cả hai khung -->
     <div class="dual-container">
       <!-- Khung A (bên trái) -->
       <div class="khung-a-trong">
-        <img src="../assets/images/khung_trong.png" alt="Khung A trống" />
-        <div class="khung-buttons">
-          <button class="khung-button" data-goto="trang2_dual_TTTT_Buttons_A.html">Sạc thanh toán trực tiếp</button>
-          <button class="khung-button" data-goto="trang2_1_app.html">Sạc qua app Rabbit EVC</button>
-        </div>
+        <img src="../assets/images/khung_trong_A.png" alt="Khung A trống" />
+        <img src="../assets/images/gifmaker_me.gif" alt="GIF Animation" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 80%; height: auto; z-index: 5;" />
       </div>
 
       <!-- Khung B (bên phải) -->
       <div class="khung-b-trong">
-        <img src="../assets/images/khung_trong.png" alt="Khung B trống" />
-        <div class="khung-buttons">
-          <button class="khung-button" data-goto="trang2_dual_TTTT_Buttons_B.html">Sạc thanh toán trực tiếp</button>
-          <button class="khung-button" data-goto="trang2_2_app.html">Sạc qua app Rabbit EVC</button>
-        </div>
+        <img src="../assets/images/khung_trong_B.png" alt="Khung B trống" />
+        <img src="../assets/images/gifmaker_me.gif" alt="GIF Animation" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 80%; height: auto; z-index: 5;" />
       </div>
     </div>
 
