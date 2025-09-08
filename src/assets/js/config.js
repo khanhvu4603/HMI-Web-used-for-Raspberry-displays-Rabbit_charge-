@@ -3,8 +3,8 @@
 // File này được nhúng ở mọi trang HMI trước các script khác
 
 window.HMI_CONFIG = {
-  // ĐỔI về địa chỉ backend của bạn (có thể là http://raspberry:3000 hoặc domain)
-  API_BASE_URL: 'http://localhost:3000',
+  // ĐỔI về địa chỉ backend của bạn (có thể là http://raspberry:8888 hoặc domain)
+  API_BASE_URL: 'http://localhost:8888',
 
   // Cấu hình polling intervals
   POLL_TICKET_MS: 2500,    // poll ticket 2.5s/lần

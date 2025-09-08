@@ -330,3 +330,5 @@ Nếu gặp vấn đề:
 3. Reboot Pi: `sudo reboot`
 4. Liên hệ team phát triển
 
+
+

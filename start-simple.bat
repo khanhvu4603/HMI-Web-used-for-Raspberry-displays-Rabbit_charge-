@@ -13,3 +13,5 @@ start "" "C:\Program Files\Google\Chrome\Application\chrome.exe" --kiosk --app=h
 
 echo Done! Press Alt+F4 to exit.
 
+
+

@@ -103,7 +103,7 @@ const API = {
   // API Endpoints cho HMI
 
   // Tạo ticket mới
-  createTicket({ amount, chargePointId, connectorId, paymentMethod = 'direct' }) {
+  createTicket({ amount, chargePointId, connectorId, paymentMethod = 'vnpay' }) {
     return this.post('/tickets', { 
       amount, 
       chargePointId, 
@@ -484,6 +484,8 @@ window.HMI_UTILS.log('info', 'API and Store loaded successfully');
 // Export cho sử dụng global
 window.API = API;
 window.Store = Store;
+
+
 
 
 

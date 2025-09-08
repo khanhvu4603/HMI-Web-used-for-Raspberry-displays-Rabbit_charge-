@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Trang 2 - Cả hai khung App</title>
+  <link rel="stylesheet" href="../assets/css/styles.css"/>
+  <style>
+    /* CSS cho hiển thị cả hai khung App */
+    .dual-container {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+    }
+    
+    /* Override CSS cho trang dual App - điều chỉnh vị trí khung A */
+    .khung-a-trong {
+      position: absolute;
+      top: 19.8%;
+      left: 21.3%;
+      width: 30%;
+      height: 71.5%;
+      z-index: 10;
+    }
+    
+    /* Override CSS cho trang dual App - điều chỉnh vị trí khung B */
+    .khung-b-trong {
+      position: absolute;
+      top: 19.6%;
+      right: 21.2%;
+      width: 30%;
+      height: 71.5%;
+      z-index: 10;
+    }
+    
+    .khung-a-trong img, .khung-b-trong img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+    
+    .app-content {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      z-index: 10;
+    }
+    
+    .app-title {
+      color: #333;
+      font-size: 20px;
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+    
+    .app-subtitle {
+      color: #666;
+      font-size: 14px;
+      margin-bottom: 4px;
+    }
+    
+    .app-price {
+      color: #007bff;
+      font-size: 16px;
+      font-weight: bold;
+      margin-bottom: 15px;
+    }
+    
+    .qr-code {
+      width: 150px;
+      height: 150px;
+      background: #f0f0f0;
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      margin: 0 auto 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #666;
+      font-size: 12px;
+    }
+    
+    .app-instruction {
+      color: #333;
+      font-size: 12px;
+      margin-bottom: 10px;
+    }
+    
+    .app-button {
+      background: #28a745;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      font-size: 12px;
+      font-weight: 500;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    
+    .app-button:hover {
+      background: #218838;
+    }
+  </style>
+</head>
+<body data-page="trang2_dual_app">
+  <main class="stage">
+    <!-- ẢNH NỀN: sử dụng ảnh trang2.jpg -->
+    <img class="slide-img" src="../assets/images/trang2.jpg" alt="Trang 2 - Cả hai khung App" />
+    
+    <!-- Container chứa cả hai khung App -->
+    <div class="dual-container">
+      <!-- Khung A App (bên trái) -->
+      <div class="khung-a-trong">
+        <img src="../assets/images/khung_trong.png" alt="Khung A trống" />
+        <div class="app-content">
+          <h2 class="app-title">SẠC QUA APP RABBIT EVC</h2>
+          <h3 class="app-subtitle">CHI PHÍ SẠC</h3>
+          <p class="app-price">6.000đ/Kwh</p>
+          <div class="qr-code">
+            QR Code App A
+          </div>
+          <p class="app-instruction">Quét mã QR để mở app</p>
+          <button class="app-button" onclick="openApp('A')">Mở App</button>
+        </div>
+      </div>
+
+      <!-- Khung B App (bên phải) -->
+      <div class="khung-b-trong">
+        <img src="../assets/images/khung_trong.png" alt="Khung B trống" />
+        <div class="app-content">
+          <h2 class="app-title">SẠC QUA APP RABBIT EVC</h2>
+          <h3 class="app-subtitle">CHI PHÍ SẠC</h3>
+          <p class="app-price">6.000đ/Kwh</p>
+          <div class="qr-code">
+            QR Code App B
+          </div>
+          <p class="app-instruction">Quét mã QR để mở app</p>
+          <button class="app-button" onclick="openApp('B')">Mở App</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Thời gian realtime -->
+    <div class="timestamp" id="current-time"></div>
+  </main>
+
+  <script src="../assets/js/config.js"></script>
+  <script src="../assets/js/api.js"></script>
+  <script src="../assets/js/script.js"></script>
+  
+  <script>
+    // Function để mở app
+    function openApp(khung) {
+      console.log(`Mở app cho khung ${khung}`);
+      
+      // Lưu thông tin khung được chọn
+      Store.set('selectedKhung', khung);
+      
+      // Có thể thêm logic mở app thực tế ở đây
+      // Ví dụ: window.open('rabbit-evc://open', '_blank');
+      
+      alert(`Đã mở app Rabbit EVC cho khung ${khung}`);
+    }
+  </script>
+</body>
+</html>

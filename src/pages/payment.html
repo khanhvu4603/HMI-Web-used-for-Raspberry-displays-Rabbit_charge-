@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Thanh toán</title>
+  <title>Thanh toán VNPAY-QR</title>
   <link rel="stylesheet" href="../assets/css/styles.css"/>
   <style>
     .payment-container {
@@ -164,7 +164,7 @@
 
     <!-- Container thanh toán -->
     <div class="payment-container">
-      <h2 class="payment-title">Thanh toán MoMo</h2>
+      <h2 class="payment-title">Thanh toán VNPAY-QR</h2>
       
       <div class="amount-section">
         <label class="amount-label" for="amountInput">Số tiền (VND)</label>
@@ -181,7 +181,7 @@
 
       <div class="qr-section">
         <div id="qrBox" class="qr-box">
-          <img id="qrImg" alt="QR MoMo" class="qr-img" />
+          <img id="qrImg" alt="QR VNPAY" class="qr-img" />
           <div id="qrCountdown" class="qr-countdown"></div>
           <div id="ticketStatus" class="ticket-status"></div>
         </div>
@@ -206,11 +206,10 @@
     let countdownTimer = null;
     let pollTimer = null;
 
-    // Lấy số tiền từ Store nếu có
-    const storedAmount = Store.get('paymentAmount');
-    if (storedAmount) {
-      amountEl.value = storedAmount;
-    }
+    const POLL_MS = (window.HMI_CONFIG && window.HMI_CONFIG.POLL_TICKET_MS) || 2000;
+
+    const storedAmount = (window.Store && Store.get) ? Store.get('paymentAmount') : null;
+    if (storedAmount) amountEl.value = storedAmount;
 
     function setStatus(text, className = '') {
       ticketStatus.textContent = text;
@@ -245,9 +244,10 @@
           if (t.status === 'paid') {
             clearInterval(pollTimer);
             setStatus('ĐÃ THANH TOÁN — vui lòng cắm sạc.', 'status-paid');
-            // Lưu ticket vào Store
-            Store.setTicketId(ticketId);
-            Store.setTicketData(t);
+            if (window.Store && Store.setTicketId) {
+              Store.setTicketId(ticketId);
+              Store.setTicketData(t);
+            }
             
             // Chuyển qua trang theo dõi sau 2 giây
             setTimeout(() => {
@@ -267,17 +267,12 @@
             }, 2000);
           } else if (t.status === 'created') {
             setStatus('Chờ thanh toán…', 'status-waiting');
-          } else if (t.status === 'expired') {
-            setStatus('Ticket đã hết hạn.', 'status-expired');
-            clearInterval(pollTimer);
-            btnCreate.disabled = false;
-            btnCreate.textContent = 'Nhận QR';
           }
         } catch (e) {
           // Có thể mất mạng/BE down — hiển thị nhẹ
           console.warn('poll ticket error', e);
         }
-      }, window.HMI_CONFIG.POLL_TICKET_MS);
+      }, POLL_MS);
     }
 
     btnCreate.addEventListener('click', async () => {
@@ -295,37 +290,40 @@
           return;
         }
 
-        const chargePointId = Store.getChargePointId() || 'CP-001';
-        const connectorId = Store.getConnectorId() || 1;
+        const chargePointId = (window.Store && Store.getChargePointId) ? Store.getChargePointId() : 'CP-001';
+        const connectorId   = (window.Store && Store.getConnectorId)   ? Store.getConnectorId()   : 1;
 
-        // Lưu số tiền vào Store
-        Store.set('paymentAmount', amount);
+        if (window.Store && Store.set) Store.set('paymentAmount', amount);
 
-        const r = await API.createTicket({ 
-          amount, 
-          chargePointId, 
-          connectorId,
-          paymentMethod: 'momo'
-        });
+        // Gọi API tạo ticket VNPAY với paymentMethod mặc định là 'vnpay'
+        const r = await API.createTicket({ amount, chargePointId, connectorId, paymentMethod: 'vnpay' });
         
         ticketId = r.ticketId || r.id;
         
+        // Xử lý response từ VNPAY backend
         if (r.qrImageDataUrl) {
+          // VNPAY backend đã render sẵn ảnh QR (data URL) - ưu tiên cao nhất
           qrImg.src = r.qrImageDataUrl;
-          qrImg.style.display = 'block';
+        } else if (r.payUrl) {
+          // VNPAY backend trả URL thanh toán → tự render QR từ URL
+          qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(r.payUrl)}`;
         } else if (r.qrCode) {
-          // Tạo QR code từ string
+          // Một số backend trả base64 (fallback)
           qrImg.src = `data:image/png;base64,${r.qrCode}`;
-          qrImg.style.display = 'block';
         } else if (r.deeplink) {
-          // Fallback: hiển thị deeplink
-          qrImg.alt = `Quét QR MoMo: ${r.deeplink}`;
-          qrImg.style.display = 'block';
+          // Trường hợp đặc biệt (fallback)
           qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(r.deeplink)}`;
+        } else {
+          // Fallback cuối cùng - sử dụng quickchart.io
+          console.warn('Không nhận được QR data từ backend, sử dụng fallback');
+          qrImg.src = `https://quickchart.io/qr?text=${encodeURIComponent(r.payUrl || 'No QR data')}&size=300&margin=1`;
         }
+        qrImg.alt = 'QR VNPAY';
+        qrImg.style.display = 'block';
         
+        // Bắt đầu đếm ngược thời gian hết hạn QR (mặc định 15 phút)
         startCountdown(r.expiresAt || new Date(Date.now() + 15 * 60 * 1000).toISOString());
-        setStatus('Đã tạo QR. Vui lòng quét để thanh toán.', 'status-waiting');
+        setStatus('Đã tạo QR VNPAY. Vui lòng quét để thanh toán.', 'status-waiting');
 
         // Bắt đầu theo dõi thanh toán
         pollTicketUntilPaid();
@@ -333,19 +331,16 @@
         btnCreate.disabled = false;
         btnCreate.textContent = 'Nhận QR';
       } catch (err) {
-        console.error(err);
-        alert('Không tạo được QR. Kiểm tra kết nối hoặc backend.');
+        console.error('Lỗi tạo ticket VNPAY:', err);
+        alert('Không tạo được QR VNPAY. Kiểm tra kết nối hoặc backend.');
         setStatus('', '');
         btnCreate.disabled = false;
         btnCreate.textContent = 'Nhận QR';
       }
     });
 
-    // Hàm quay lại
     window.goBack = function() {
-      // Xóa dữ liệu tạm thời
-      Store.del('paymentAmount');
-      // Quay lại trang trước
+      if (window.Store && Store.del) Store.del('paymentAmount');
       window.history.back();
     };
 

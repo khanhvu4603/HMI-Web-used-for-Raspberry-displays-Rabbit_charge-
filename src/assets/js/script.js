@@ -113,28 +113,81 @@ document.addEventListener('keydown', (event) => {
     window.location.href = 'trang2.html';
   }
   
-  // Chuyển từ trang 2_1 sang trang 2_2 (phím 2)
+  // Nếu đang ở trang dual và nhấn phím 0 - quay về trang 2
+  if ((currentPage === 'trang2_dual.html' || 
+       currentPage === 'trang2_dual_TTTT.html' || 
+       currentPage === 'trang2_dual_app.html') && event.key === '0') {
+    window.location.href = 'trang2.html';
+  }
+  
+  // Nếu đang ở trang dual và nhấn phím 1 - chỉ hiển thị khung A
+  if (currentPage === 'trang2_dual.html' && event.key === '1') {
+    window.location.href = 'trang2_1.html';
+  }
+  if (currentPage === 'trang2_dual_TTTT.html' && event.key === '1') {
+    window.location.href = 'trang2_1_TTTT.html';
+  }
+  if (currentPage === 'trang2_dual_app.html' && event.key === '1') {
+    window.location.href = 'trang2_1_app.html';
+  }
+  
+  // Nếu đang ở trang dual và nhấn phím 2 - chỉ hiển thị khung B
+  if (currentPage === 'trang2_dual.html' && event.key === '2') {
+    window.location.href = 'trang2_2.html';
+  }
+  if (currentPage === 'trang2_dual_TTTT.html' && event.key === '2') {
+    window.location.href = 'trang2_2_TTTT.html';
+  }
+  if (currentPage === 'trang2_dual_app.html' && event.key === '2') {
+    window.location.href = 'trang2_2_app.html';
+  }
+  
+  // Chuyển từ trang 2_1 sang trang 2_2 (phím 2) - hiển thị cả hai
   if ((currentPage === 'trang2_1.html' || 
        currentPage === 'trang2_1_TTTT.html' || 
        currentPage === 'trang2_1_app.html') && event.key === '2') {
-    window.location.href = 'trang2_2.html';
+    // Xác định trang dual tương ứng
+    if (currentPage === 'trang2_1_TTTT.html') {
+      window.location.href = 'trang2_dual_TTTT.html';
+    } else if (currentPage === 'trang2_1_app.html') {
+      window.location.href = 'trang2_dual_app.html';
+    } else {
+      window.location.href = 'trang2_dual.html';
+    }
   }
   
-  // Chuyển từ trang 2_2 sang trang 2_1 (phím 1)
+  // Chuyển từ trang 2_2 sang trang 2_1 (phím 1) - hiển thị cả hai
   if ((currentPage === 'trang2_2.html' || 
        currentPage === 'trang2_2_TTTT.html' || 
        currentPage === 'trang2_2_app.html') && event.key === '1') {
-    window.location.href = 'trang2_1.html';
+    // Xác định trang dual tương ứng
+    if (currentPage === 'trang2_2_TTTT.html') {
+      window.location.href = 'trang2_dual_TTTT.html';
+    } else if (currentPage === 'trang2_2_app.html') {
+      window.location.href = 'trang2_dual_app.html';
+    } else {
+      window.location.href = 'trang2_dual.html';
+    }
   }
   
-  // Chuyển từ trang 2_1_TTTT sang trang 2_2_TTTT (phím 2)
+  // Chuyển từ trang 2_1_TTTT sang trang 2_2_TTTT (phím 2) - hiển thị cả hai
   if (currentPage === 'trang2_1_TTTT.html' && event.key === '2') {
-    window.location.href = 'trang2_2_TTTT.html';
+    window.location.href = 'trang2_dual_TTTT.html';
   }
   
-  // Chuyển từ trang 2_2_TTTT sang trang 2_1_TTTT (phím 1)
+  // Chuyển từ trang 2_2_TTTT sang trang 2_1_TTTT (phím 1) - hiển thị cả hai
   if (currentPage === 'trang2_2_TTTT.html' && event.key === '1') {
-    window.location.href = 'trang2_1_TTTT.html';
+    window.location.href = 'trang2_dual_TTTT.html';
+  }
+  
+  // Chuyển từ trang 2_1_app sang trang 2_2_app (phím 2) - hiển thị cả hai
+  if (currentPage === 'trang2_1_app.html' && event.key === '2') {
+    window.location.href = 'trang2_dual_app.html';
+  }
+  
+  // Chuyển từ trang 2_2_app sang trang 2_1_app (phím 1) - hiển thị cả hai
+  if (currentPage === 'trang2_2_app.html' && event.key === '1') {
+    window.location.href = 'trang2_dual_app.html';
   }
 });
   
@@ -227,7 +280,7 @@ function clearInput() {
   }
 }
 
-function enterInput() {
+async function enterInput() {
   const inputText = document.getElementById('inputValue');
   if (inputText && inputText.textContent !== 'Nhập số tiền') {
     let finalValue = inputText.textContent;
@@ -238,29 +291,139 @@ function enterInput() {
     if (amount && amount >= 10000) {
       Store.set('paymentAmount', amount);
       
-      // Xác định đường dẫn chính xác dựa trên vị trí hiện tại
-      const currentPath = window.location.pathname;
-      let paymentPath = 'payment.html';
+      // Ẩn bàn phím trước
+      hideKeyboard();
       
-      if (currentPath.includes('/src/pages/')) {
-        // Đang ở trong thư mục src/pages/
-        paymentPath = 'payment.html';
-      } else if (currentPath.includes('/src/')) {
-        // Đang ở trong thư mục src/
-        paymentPath = 'pages/payment.html';
-      } else {
-        // Đang ở thư mục gốc
-        paymentPath = 'src/pages/payment.html';
+      // Hiển thị loading
+      showPaymentLoading();
+      
+      try {
+        // Gọi API tạo ticket VNPAY
+        const chargePointId = Store.getChargePointId() || 'CP-001';
+        const connectorId = Store.getConnectorId() || 1;
+        
+        const response = await API.createTicket({ 
+          amount, 
+          chargePointId, 
+          connectorId, 
+          paymentMethod: 'vnpay' 
+        });
+        
+        // Hiển thị QR code trong khung
+        showPaymentQR(response, amount);
+        
+      } catch (error) {
+        console.error('Lỗi tạo ticket VNPAY:', error);
+        alert('Không tạo được QR VNPAY. Kiểm tra kết nối hoặc backend.');
+        hidePaymentLoading();
       }
-      
-      console.log('Chuyển đến trang thanh toán:', paymentPath);
-      window.location.href = paymentPath;
     } else {
       alert('Số tiền không hợp lệ. Vui lòng nhập số tiền từ 10,000 VND trở lên.');
     }
+  }
+}
+
+// Hiển thị loading cho thanh toán
+function showPaymentLoading() {
+  const content = document.querySelector('.tttt-content');
+  if (content) {
+    content.innerHTML = `
+      <div style="text-align: center; padding: 20px;">
+        <div class="loading" style="display: inline-block; width: 40px; height: 40px; border: 4px solid #f3f3f3; border-top: 4px solid #007bff; border-radius: 50%; animation: spin 1s linear infinite;"></div>
+        <p style="margin-top: 15px; color: #666;">Đang tạo QR VNPAY...</p>
+      </div>
+    `;
+  }
+}
+
+// Ẩn loading cho thanh toán
+function hidePaymentLoading() {
+  const content = document.querySelector('.tttt-content');
+  if (content) {
+    content.innerHTML = `
+      <h2 class="tttt-title">THANH TOÁN TRỰC TIẾP</h2>
+      <h3 class="tttt-subtitle">CHI PHÍ SẠC</h3>
+      <p class="tttt-price">6.000đ/Kwh</p>
+      <div class="input-box" onclick="showKeyboard()">
+        <span class="input-text" id="inputValue">Nhập số tiền mà quý khách muốn nạp</span>
+      </div>
+    `;
+  }
+}
+
+// Hiển thị QR code cho thanh toán
+function showPaymentQR(response, amount) {
+  const content = document.querySelector('.tttt-content');
+  if (content) {
+    let qrImageUrl = '';
     
-    // Ẩn bàn phím sau khi chốt
-    hideKeyboard();
+    if (response.qrImageDataUrl) {
+      qrImageUrl = response.qrImageDataUrl;
+    } else if (response.payUrl) {
+      qrImageUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(response.payUrl)}`;
+    } else if (response.qrCode) {
+      qrImageUrl = `data:image/png;base64,${response.qrCode}`;
+    }
+    
+    content.innerHTML = `
+      <h2 class="tttt-title" style="margin-top: -15px;">THANH TOÁN VNPAY</h2>
+      <h3 class="tttt-subtitle" style="margin-top: -10px;">Số tiền: ${formatNumber(amount)} VND</h3>
+      <div style="margin: 150px 0; margin-left: 140px;">
+        <img src="${qrImageUrl}" alt="QR VNPAY" style="width: 190px; height: 190px; border: 2px solid #ddd; border-radius: 8px;" />
+      </div>
+      <p style="color: #666; font-size: 14px; margin-top: -130px; margin-bottom: 15px; margin-left: 150px;">Quét mã QR để thanh toán</p>
+      <button onclick="resetPaymentInput()" style="background: #6c757d; color: white; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-size: 14px; margin-left: 190px;">Nhập lại</button>
+    `;
+    
+    // Bắt đầu theo dõi thanh toán
+    if (response.ticketId) {
+      startPaymentPolling(response.ticketId);
+    }
+  }
+}
+
+// Reset input thanh toán về trạng thái ban đầu
+function resetPaymentInput() {
+  const content = document.querySelector('.tttt-content');
+  if (content) {
+    content.innerHTML = `
+      <h2 class="tttt-title">THANH TOÁN TRỰC TIẾP</h2>
+      <h3 class="tttt-subtitle">CHI PHÍ SẠC</h3>
+      <p class="tttt-price">6.000đ/Kwh</p>
+      <div class="input-box" onclick="showKeyboard()">
+        <span class="input-text" id="inputValue">Nhập số tiền mà quý khách muốn nạp</span>
+      </div>
+    `;
+  }
+}
+
+// Theo dõi thanh toán
+function startPaymentPolling(ticketId) {
+  const pollInterval = setInterval(async () => {
+    try {
+      const ticket = await API.getTicket(ticketId);
+      if (ticket.status === 'paid') {
+        clearInterval(pollInterval);
+        showPaymentSuccess();
+      }
+    } catch (error) {
+      console.warn('Lỗi poll ticket:', error);
+    }
+  }, 3000);
+}
+
+// Hiển thị thông báo thanh toán thành công
+function showPaymentSuccess() {
+  const content = document.querySelector('.tttt-content');
+  if (content) {
+    content.innerHTML = `
+      <div style="text-align: center; padding: 20px;">
+        <div style="color: #28a745; font-size: 48px; margin-bottom: 15px;">✓</div>
+        <h2 style="color: #28a745; margin-bottom: 10px;">THANH TOÁN THÀNH CÔNG</h2>
+        <p style="color: #666; margin-bottom: 15px;">Vui lòng cắm sạc để bắt đầu</p>
+        <button onclick="resetPaymentInput()" style="background: #007bff; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer;">Tiếp tục</button>
+      </div>
+    `;
   }
 }
   

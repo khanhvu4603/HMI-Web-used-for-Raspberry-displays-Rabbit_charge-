@@ -103,3 +103,5 @@ Windows Registry Editor Version 5.00
 - ✅ Khó thoát khỏi chế độ kiosk
 - ✅ Giao diện chuyên nghiệp
 
+
+
