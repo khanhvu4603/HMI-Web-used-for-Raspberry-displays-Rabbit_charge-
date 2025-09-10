@@ -11,10 +11,44 @@
     <!-- ẢNH TRANG 2.1: đổi src theo ảnh của bạn -->
     <img class="slide-img" src="../assets/images/trang2_1.jpg" alt="Trang 2.1" />
     
-    <!-- Khung A trống -->
+    <!-- Khung A - Sạc AC -->
     <div class="khung-a-trong">
       <img src="../assets/images/khung_trong_A.png" alt="Khung A trống" />
+      
+      <!-- Thông tin sạc AC -->
+      <div class="charging-info-ac" style="position: absolute; top: 10%; left: 50%; transform: translateX(-50%); z-index: 10; text-align: center; color: #333; margin-top: 20px;">
+        <!-- Tiêu đề khung A -->
+        <div style="margin-bottom: 15px;">
+          <h3 style="font-size: 18px; color: #007bff; margin: 0; font-weight: bold; margin-left: 140px;">SẠC AC</h3>
+        </div>
+        
+        <!-- kWh lên trên -->
+        <div style="display: flex; justify-content: center; margin-bottom: 15px;">
+          <div style="display: flex; align-items: center; justify-content: center;">
+            <div id="kwh-ac" style="border: 2px solid #007bff; padding: 8px 12px; background: white; border-radius: 8px; min-width: 80px; font-size: 16px; font-weight: bold; color: #007bff; margin-right: 8px;">0</div>
+            <span style="font-weight: bold; font-size: 14px; color: #666;">kWh</span>
+          </div>
+        </div>
+      </div>
+      
+      <!-- GIF Animation -->
       <img src="../assets/images/gifmaker_me.gif" alt="GIF Animation" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 80%; height: auto; z-index: 5;" />
+      
+      <!-- Thông tin phiên sạc AC -->
+      <div style="position: absolute; bottom: 10%; left: 50%; transform: translateX(-50%); z-index: 10; text-align: center; color: #333;">
+        <h3 style="margin-bottom: 15px; font-size: 18px; color: #333; font-weight: bold;">Thông tin phiên sạc AC:</h3>
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+          <div style="display: flex; align-items: center; justify-content: center;">
+            <span style="font-weight: bold; font-size: 14px; color: #666; margin-right: 8px;">P (W):</span>
+            <div id="power-ac" style="border: 2px solid #007bff; padding: 8px 12px; background: white; border-radius: 8px; min-width: 80px; font-size: 16px; font-weight: bold; color: #007bff;">0</div>
+          </div>
+          <div style="display: flex; align-items: center; justify-content: center;">
+            <span style="font-weight: bold; font-size: 14px; color: #666; margin-right: 8px;">E (kWh):</span>
+            <div id="energy-ac" style="border: 2px solid #007bff; padding: 8px 12px; background: white; border-radius: 8px; min-width: 80px; font-size: 16px; font-weight: bold; color: #007bff;">0</div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- Mũi tên trái/phải (chỉ là mũi tên) -->
@@ -25,6 +59,7 @@
 
   <script src="../assets/js/config.js"></script>
   <script src="../assets/js/api.js"></script>
+  <script src="../assets/js/plc-websocket.js"></script>
   <script src="../assets/js/script.js"></script>
 </body>
 </html>

@@ -1,339 +1,580 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trạng thái sạc Dual - A: QR, B: Buttons</title>
-    <link rel="stylesheet" href="../assets/css/styles.css">
-    <style>
-        body {
-            background-color: #333;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            overflow: hidden;
-        }
-        .main-frame {
-            width: 1024px;
-            height: 600px;
-            background-color: white;
-            border-radius: 20px;
-            position: relative;
-            display: flex;
-            justify-content: space-between;
-            padding: 20px;
-            box-sizing: border-box;
-        }
-        .khung-a-trong, .khung-b-trong {
-            width: 49%;
-            height: 100%;
-            background-color: #f0f0f0;
-            border-radius: 15px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-            box-sizing: border-box;
-            padding: 20px;
-            text-align: center;
-        }
-
-        /* Specific overrides for dual view to ensure they are side-by-side */
-        .khung-a-trong {
-            left: 0;
-            right: auto;
-            margin-right: 1%;
-        }
-        .khung-b-trong {
-            right: 0;
-            left: auto;
-            margin-left: 1%;
-        }
-
-        .brain-icon {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            width: 30px;
-            height: 30px;
-            background-color: #333;
-            border-radius: 5px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        .brain-icon img {
-            width: 20px;
-            height: 20px;
-            filter: invert(1);
-        }
-
-        /* Styles for QR code display in Khung A */
-        .qr-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100%;
-            width: 100%;
-            padding: 20px;
-            box-sizing: border-box;
-        }
-        .qr-title {
-            font-size: 24px;
-            font-weight: bold;
-            color: #333;
-            margin-bottom: 10px;
-            text-align: center;
-        }
-        .qr-amount {
-            font-size: 18px;
-            color: #666;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-        .qr-image {
-            width: 180px;
-            height: 180px;
-            object-fit: contain;
-            margin-bottom: 15px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-        }
-        .qr-instruction {
-            font-size: 16px;
-            color: #666;
-            margin-bottom: 15px;
-            text-align: center;
-        }
-        .btn-reset {
-            padding: 12px 24px;
-            font-size: 16px;
-            cursor: pointer;
-            border-radius: 8px;
-            border: none;
-            background-color: #6c757d;
-            color: white;
-            font-weight: bold;
-        }
-        .btn-reset:hover {
-            background-color: #5a6268;
-        }
-        
-        /* Loading spinner */
-        .loading-spinner {
-            display: none;
-            width: 40px;
-            height: 40px;
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid #007bff;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin: 20px auto;
-        }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        /* Styles for buttons in Khung B */
-        .button-container {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            width: 80%;
-            max-width: 300px;
-        }
-        .payment-button {
-            padding: 15px 20px;
-            font-size: 18px;
-            font-weight: bold;
-            color: white;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            text-align: center;
-            text-decoration: none;
-            display: block;
-        }
-        .payment-button.direct {
-            background-color: #28a745;
-        }
-        .payment-button.app {
-            background-color: #007bff;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Trang 2 Dual - A TTTT, B Buttons</title>
+  <link rel="stylesheet" href="../assets/css/styles.css"/>
+  <style>
+    /* Container cho hiển thị cả hai khung */
+    .dual-container {
+      position: absolute;
+      width: 100%;
+      height: 100vh;    
+    }
+    
+    /* Override CSS cho trang dual - điều chỉnh vị trí khung A */
+    .khung-a-trong {
+      position: absolute;
+      top: 19.8%;
+      left: 22.15%;
+      width: 28%;
+      height: 71.5%;
+      z-index: 10;
+    }
+    
+    /* Override CSS cho trang dual - điều chỉnh vị trí khung B */
+    .khung-b-trong {
+      position: absolute;
+      top: 19.6%;
+      right: 22.2%;
+      width: 28%;
+      height: 71.5%;
+      z-index: 10;
+    }
+  </style>
 </head>
-<body data-page="trang2_dual_QR_Buttons_A.html">
-    <div class="main-frame">
-        <div class="brain-icon">
-            <img src="../assets/images/brain-icon.png" alt="Brain Icon">
+<body data-page="trang2_dual_TTTT_Buttons_A">
+  <main class="stage">
+    <!-- ẢNH NỀN: sử dụng ảnh trang2.jpg -->
+    <img class="slide-img" src="../assets/images/trang2.jpg" alt="Trang 2 Dual - A TTTT, B Buttons" />
+    
+    <!-- Container chứa cả hai khung -->
+    <div class="dual-container">
+      <!-- Khung A (bên trái) - THANH TOÁN TRỰC TIẾP -->
+      <div class="khung-a-trong">
+        <img src="../assets/images/khung_trong.png" alt="Khung A trống" />
+        <div class="tttt-content" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 10;">
+          <h2 class="tttt-title" style="white-space: nowrap; font-size: 16px;">THANH TOÁN TRỰC TIẾP</h2>
+          <h3 class="tttt-subtitle">CHI PHÍ SẠC</h3>
+          <p class="tttt-price">6.000đ/Kwh</p>
+          <div class="input-box" onclick="showKeyboardA()">
+            <span class="input-text" id="inputValueA">Nhập số tiền mà quý khách muốn nạp</span>
+          </div>
         </div>
+      </div>
 
-        <!-- Khung A: Hiển thị QR Code -->
-        <div class="khung-a-trong">
-            <div class="brain-icon">
-                <img src="../assets/images/brain-icon.png" alt="Brain Icon">
-            </div>
-            <div class="qr-container" id="qrContainerA">
-                <h2 class="qr-title">THANH TOÁN VNPAY</h2>
-                <p class="qr-amount" id="qrAmountA">Số tiền: 0 VNĐ</p>
-                <div class="loading-spinner" id="loadingSpinnerA"></div>
-                <img id="qrCodeImageA" class="qr-image" src="" alt="QR Code" style="display: none;">
-                <p class="qr-instruction">Quét mã QR để thanh toán</p>
-                <button class="btn-reset" id="resetButtonA">Nhập lại</button>
-            </div>
+      <!-- Khung B (bên phải) - NÚT THANH TOÁN -->
+      <div class="khung-b-trong">
+        <img src="../assets/images/khung_trong.png" alt="Khung B trống" />
+        <div class="khung-buttons" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 10;">
+          <button class="khung-button" onclick="showPaymentInputA()" style="background: #28a745; color: white; border: none; padding: 12px 20px; border-radius: 8px; cursor: pointer; font-size: 16px; margin: 8px; display: block; width: 200px;">Sạc thanh toán trực tiếp</button>
+          <button class="khung-button" data-goto="trang2_2_app.html" style="background: #007bff; color: white; border: none; padding: 12px 20px; border-radius: 8px; cursor: pointer; font-size: 16px; margin: 8px; display: block; width: 200px;">Sạc qua app Rabbit EVC</button>
         </div>
-
-        <!-- Khung B: Hiển thị 2 nút thanh toán -->
-        <div class="khung-b-trong">
-            <div class="button-container">
-                <button class="payment-button direct" id="directPaymentButtonB">Sạc thanh toán trực tiếp</button>
-                <button class="payment-button app" id="appPaymentButtonB">Sạc qua app Rabbit EVC</button>
-            </div>
-        </div>
+      </div>
     </div>
 
-    <script src="../assets/js/store.js"></script>
-    <script src="../assets/js/api.js"></script>
-    <script src="../assets/js/script.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const qrCodeImageA = document.getElementById('qrCodeImageA');
-            const qrAmountA = document.getElementById('qrAmountA');
-            const loadingSpinnerA = document.getElementById('loadingSpinnerA');
-            const resetButtonA = document.getElementById('resetButtonA');
-            const directPaymentButtonB = document.getElementById('directPaymentButtonB');
-            const appPaymentButtonB = document.getElementById('appPaymentButtonB');
+    <!-- Thời gian realtime -->
+    <div class="timestamp" id="current-time"></div>
+  </main>
 
-            let paymentPollingIntervalA;
+  <!-- Virtual Keyboard -->
+  <div class="keyboard" id="keyboard">
+    <div class="keyboard-row">
+      <div class="keyboard-key" onclick="inputKey('1')">1</div>
+      <div class="keyboard-key" onclick="inputKey('2')">2</div>
+      <div class="keyboard-key" onclick="inputKey('3')">3</div>
+      <div class="keyboard-key" onclick="inputKey('4')">4</div>
+      <div class="keyboard-key" onclick="inputKey('5')">5</div>
+      <div class="keyboard-key" onclick="inputKey('6')">6</div>
+      <div class="keyboard-key" onclick="inputKey('7')">7</div>
+      <div class="keyboard-key" onclick="inputKey('8')">8</div>
+      <div class="keyboard-key" onclick="inputKey('9')">9</div>
+      <div class="keyboard-key" onclick="inputKey('0')">0</div>
+    </div>
+    <div class="keyboard-row">
+      <div class="keyboard-key wide" onclick="backspace()">⌫</div>
+      <div class="keyboard-key wide" onclick="clearInput()">Xóa</div>
+      <div class="keyboard-key wide" onclick="enterInput()">Enter</div>
+    </div>
+    <div class="keyboard-row">
+      <div class="keyboard-key space" onclick="hideKeyboard()">Đóng</div>
+    </div>
+  </div>
 
-            // Function to format number with thousand separators
-            function formatNumber(num) {
-                return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-            }
+  <script src="../assets/js/config.js"></script>
+  <script src="../assets/js/api.js"></script>
+  <script src="../assets/js/script.js"></script>
+  
+  <script>
+    // Trạng thái ban đầu: khung A có nút, khung B có form TTTT
+    document.addEventListener('DOMContentLoaded', function() {
+      // Luôn hiển thị trạng thái ban đầu: khung A có nút, khung B có form TTTT
+      swapContentForButtonsA();
+    });
 
-            // Function to create ticket and show QR code for Frame A
-            async function createTicketAndShowQRA() {
-                const amount = window.Store.getItem('paymentAmount');
-                
-                if (!amount) {
-                    alert('Vui lòng nhập số tiền thanh toán.');
-                    return;
-                }
+    // Hoán đổi nội dung: khung A có nút, khung B có form TTTT
+    function swapContentForButtonsA() {
+      // Khung A: hiển thị 2 nút
+      const khungA = document.querySelector('.khung-a-trong .tttt-content');
+      if (khungA) {
+        khungA.innerHTML = `
+          <div class="khung-buttons" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 10;">
+            <button class="khung-button" onclick="showPaymentInputA()" style="background: #28a745; color: white; border: none; padding: 12px 20px; border-radius: 8px; cursor: pointer; font-size: 16px; margin: 8px; display: block; width: 200px;">Sạc thanh toán trực tiếp</button>
+            <button class="khung-button" data-goto="trang2_2_app.html" style="background: #007bff; color: white; border: none; padding: 12px 20px; border-radius: 8px; cursor: pointer; font-size: 16px; margin: 8px; display: block; width: 200px;">Sạc qua app Rabbit EVC</button>
+          </div>
+        `;
+      }
+      
+      // Khung B: hiển thị form TTTT đẹp như trang2_2_TTTT
+      const khungB = document.querySelector('.khung-b-trong');
+      if (khungB) {
+        // Xóa nội dung cũ
+        const oldContent = khungB.querySelector('.khung-buttons');
+        if (oldContent) {
+          oldContent.remove();
+        }
+        
+        // Thêm nội dung mới với cấu trúc đẹp
+        const newContent = document.createElement('div');
+        newContent.className = 'tttt-content';
+        newContent.style.cssText = 'position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 10;';
+        newContent.innerHTML = `
+          <h2 class="tttt-title">THANH TOÁN TRỰC TIẾP</h2>
+          <h3 class="tttt-subtitle">CHI PHÍ SẠC</h3>
+          <p class="tttt-price">6.000đ/Kwh</p>
+          <div class="input-box" onclick="showKeyboardB()">
+            <span class="input-text" id="inputValueB">Nhập số tiền mà quý khách muốn nạp</span>
+          </div>
+        `;
+        khungB.appendChild(newContent);
+      }
+    }
 
-                // Show loading
-                loadingSpinnerA.style.display = 'block';
-                qrCodeImageA.style.display = 'none';
-
-                try {
-                    const response = await api.createTicket({
-                        amount: parseInt(amount),
-                        chargePointId: window.Store.getItem('chargePointId') || 'CP001',
-                        connectorId: window.Store.getItem('connectorId') || '1',
-                        paymentMethod: 'vnpay'
-                    });
-
-                    if (response && response.ticketId) {
-                        // Store ticket information
-                        window.Store.setItem('ticketId', response.ticketId);
-                        window.Store.setItem('payUrl', response.payUrl);
-                        window.Store.setItem('qrImageDataUrl', response.qrImageDataUrl);
-                        window.Store.setItem('expiresAt', response.expiresAt);
-
-                        // Update UI
-                        qrAmountA.textContent = `Số tiền: ${formatNumber(amount)} VNĐ`;
-                        
-                        if (response.qrImageDataUrl) {
-                            qrCodeImageA.src = response.qrImageDataUrl;
-                        } else if (response.payUrl) {
-                            const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(response.payUrl)}`;
-                            qrCodeImageA.src = qrUrl;
-                        }
-
-                        // Hide loading and show QR
-                        loadingSpinnerA.style.display = 'none';
-                        qrCodeImageA.style.display = 'block';
-
-                        // Start payment polling
-                        startPaymentPollingA(response.ticketId);
-                    } else {
-                        throw new Error('Không thể tạo ticket thanh toán');
-                    }
-                } catch (error) {
-                    console.error('Error creating ticket:', error);
-                    loadingSpinnerA.style.display = 'none';
-                    alert('Có lỗi xảy ra khi tạo mã QR. Vui lòng thử lại.');
-                }
-            }
-
-            // Function to poll payment status for Frame A
-            async function startPaymentPollingA(ticketId) {
-                if (paymentPollingIntervalA) {
-                    clearInterval(paymentPollingIntervalA);
-                }
-
-                paymentPollingIntervalA = setInterval(async () => {
-                    try {
-                        const response = await api.getTicketStatus(ticketId);
-                        if (response.status === 'PAID') {
-                            clearInterval(paymentPollingIntervalA);
-                            clearInterval(expiryTimeoutA);
-                            showPaymentSuccessA();
-                        } else if (response.status === 'EXPIRED' || response.status === 'FAILED') {
-                            clearInterval(paymentPollingIntervalA);
-                            clearInterval(expiryTimeoutA);
-                            qrStatusA.textContent = `Thanh toán thất bại: ${response.status}`;
-                            qrStatusA.style.color = '#dc3545';
-                        }
-                    } catch (error) {
-                        console.error('Error polling payment status for Frame A:', error);
-                        clearInterval(paymentPollingIntervalA);
-                        clearInterval(expiryTimeoutA);
-                        qrStatusA.textContent = 'Lỗi khi kiểm tra trạng thái thanh toán.';
-                        qrStatusA.style.color = '#dc3545';
-                    }
-                }, 5000);
-            }
-
-            // Function to show payment success for Frame A
-            function showPaymentSuccessA() {
-                qrStatusA.textContent = 'Thanh toán thành công!';
-                qrStatusA.style.color = '#28a745';
-                qrExpiryA.textContent = '';
-            }
-
-            // Reset function for Frame A
-            resetButtonA.addEventListener('click', () => {
-                clearInterval(paymentPollingIntervalA);
-                window.Store.removeItem('ticketId');
-                window.Store.removeItem('paymentAmount');
-                window.Store.removeItem('payUrl');
-                window.Store.removeItem('qrImageDataUrl');
-                window.Store.removeItem('expiresAt');
-                window.location.href = 'trang2_1_TTTT.html';
-            });
-
-            // Initialize QR display for Frame A if payment amount exists
-            const paymentAmount = window.Store.getItem('paymentAmount');
-            if (paymentAmount) {
-                createTicketAndShowQRA();
-            } else {
-                qrAmountA.textContent = 'Vui lòng nhập số tiền thanh toán';
-            }
-
-            // Event listeners for buttons in Khung B
-            directPaymentButtonB.addEventListener('click', () => {
-                window.location.href = 'trang2_dual_TTTT.html';
-            });
-
-            appPaymentButtonB.addEventListener('click', () => {
-                window.location.href = 'trang2_dual_app.html';
-            });
+    // Hiển thị QR từ Store
+    async function showQRFromStore(amount) {
+      try {
+        // Gọi API tạo ticket VNPAY
+        const chargePointId = Store.getChargePointId() || 'CP-001';
+        const connectorId = Store.getConnectorId() || 1;
+        
+        const response = await API.createTicket({ 
+          amount: parseInt(amount), 
+          chargePointId, 
+          connectorId, 
+          paymentMethod: 'vnpay' 
         });
-    </script>
+        
+        // Hiển thị QR code trong khung A
+        showPaymentQRA(response, parseInt(amount));
+        
+      } catch (error) {
+        console.error('Lỗi tạo ticket VNPAY:', error);
+        // Nếu lỗi, hiển thị form nhập tiền bình thường
+      }
+    }
+
+    // Virtual keyboard functions chung
+    let currentInput = null; // Lưu trữ input hiện tại đang active
+    
+    function showKeyboardA() {
+      currentInput = 'A';
+      document.getElementById('keyboard').style.display = 'block';
+    }
+
+    function showKeyboardB() {
+      currentInput = 'B';
+      document.getElementById('keyboard').style.display = 'block';
+    }
+    
+    function hideKeyboardA() {
+      document.getElementById('keyboard').style.display = 'none';
+      currentInput = null;
+    }
+    
+    function showKeyboard() {
+      // Function chung cho keyboard
+      document.getElementById('keyboard').style.display = 'block';
+    }
+    
+    function hideKeyboard() {
+      document.getElementById('keyboard').style.display = 'none';
+      currentInput = null;
+    }
+    
+    function hideKeyboardB() {
+      document.getElementById('keyboard').style.display = 'none';
+    }
+    
+    // Functions chung cho keyboard
+    function inputKey(key) {
+      if (currentInput === 'A') {
+        inputKeyA(key);
+      } else if (currentInput === 'B') {
+        inputKeyB(key);
+      }
+    }
+    
+    function backspace() {
+      if (currentInput === 'A') {
+        backspaceA();
+      } else if (currentInput === 'B') {
+        backspaceB();
+      }
+    }
+    
+    function clearInput() {
+      if (currentInput === 'A') {
+        clearInputA();
+      } else if (currentInput === 'B') {
+        clearInputB();
+      }
+    }
+    
+    function enterInput() {
+      if (currentInput === 'A') {
+        enterInputA();
+      } else if (currentInput === 'B') {
+        enterInputB();
+      }
+    }
+    
+    function inputKeyB(key) {
+      const inputElement = document.getElementById('inputValueB');
+      if (inputElement) {
+        if (inputElement.textContent === 'Nhập số tiền mà quý khách muốn nạp') {
+          inputElement.textContent = key;
+        } else {
+          inputElement.textContent += key;
+        }
+      }
+    }
+    
+    function backspaceB() {
+      const inputElement = document.getElementById('inputValueB');
+      if (inputElement && inputElement.textContent !== 'Nhập số tiền mà quý khách muốn nạp') {
+        inputElement.textContent = inputElement.textContent.slice(0, -1);
+        if (inputElement.textContent === '') {
+          inputElement.textContent = 'Nhập số tiền mà quý khách muốn nạp';
+        }
+      }
+    }
+    
+    function clearInputB() {
+      const inputElement = document.getElementById('inputValueB');
+      if (inputElement) {
+        inputElement.textContent = 'Nhập số tiền mà quý khách muốn nạp';
+      }
+    }
+    
+    function enterInputB() {
+      const inputElement = document.getElementById('inputValueB');
+      if (inputElement && inputElement.textContent !== 'Nhập số tiền mà quý khách muốn nạp') {
+        const amount = inputElement.textContent.replace(/[^\d]/g, '');
+        if (amount && parseInt(amount) > 0) {
+          // Lưu số tiền vào Store
+          Store.set('paymentAmount', amount);
+          Store.setChargePointId('CP-001');
+          Store.setConnectorId(2);
+          
+          // Hiển thị loading và tạo QR
+          showPaymentLoadingB();
+          hideKeyboardB();
+          
+          // Tạo ticket VNPAY
+          API.createTicket({ 
+            amount: parseInt(amount), 
+            chargePointId: 'CP-001', 
+            connectorId: 2, 
+            paymentMethod: 'vnpay' 
+          })
+          .then(response => {
+            hidePaymentLoadingB();
+            showPaymentQRB(response, parseInt(amount));
+          })
+          .catch(error => {
+            console.error('Lỗi tạo ticket VNPAY:', error);
+            hidePaymentLoadingB();
+            alert('Có lỗi xảy ra khi tạo QR code. Vui lòng thử lại.');
+          });
+        } else {
+          alert('Vui lòng nhập số tiền hợp lệ');
+        }
+      } else {
+        // Nếu chưa nhập gì mà nhấn Enter, không làm gì cả
+        console.log('Chưa nhập số tiền, vui lòng nhập số tiền trước khi nhấn Enter');
+      }
+    }
+    
+
+    // Payment functions for khung B
+    function showPaymentLoadingB() {
+      const content = document.querySelector('.khung-b-trong .tttt-content');
+      if (content) {
+        content.innerHTML = `
+          <div style="text-align: center; padding: 20px;">
+            <div class="spinner" style="border: 4px solid #f3f3f3; border-top: 4px solid #3498db; border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; margin: 0 auto;"></div>
+            <p style="margin-top: 15px; color: #666;">Đang tạo QR code...</p>
+          </div>
+        `;
+      }
+    }
+
+    function hidePaymentLoadingB() {
+      // Loading sẽ được thay thế bởi QR code
+    }
+
+    function showPaymentQRB(response, amount) {
+      const content = document.querySelector('.khung-b-trong .tttt-content');
+      if (content) {
+        const qrImageUrl = response.qrCodeUrl || 'https://via.placeholder.com/200x200?text=QR+Code';
+        content.innerHTML = `
+          <h2 class="tttt-title" style="margin-top: -15px; white-space: nowrap; font-size: 16px;">THANH TOÁN VNPAY</h2>
+          <h3 class="tttt-subtitle" style="margin-top: -10px;">Số tiền: ${formatNumber(amount)} VND</h3>
+          <div style="margin: 150px 0; text-align: center;">
+            <img src="${qrImageUrl}" alt="QR VNPAY" style="width: 150px; height: 150px; border: 2px solid #ddd; border-radius: 8px;" />
+          </div>
+          <p style="color: #666; font-size: 14px; margin-top: -130px; text-align: center;">Quét mã QR để thanh toán</p>
+          <button onclick="resetPaymentInputB()" style="background: #6c757d; color: white; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 12px; margin-top: 10px; margin-left: 180px;">Nhập lại</button>
+        `;
+      }
+      
+      // Bắt đầu polling để kiểm tra trạng thái thanh toán
+      startPaymentPollingB(response.ticketId);
+    }
+
+    function resetPaymentInputB() {
+      // Xóa paymentAmount khỏi Store
+      Store.remove('paymentAmount');
+      
+      // Hiển thị lại form nhập tiền
+      const content = document.querySelector('.khung-b-trong .tttt-content');
+      if (content) {
+        content.innerHTML = `
+          <h2 class="tttt-title">THANH TOÁN TRỰC TIẾP</h2>
+          <h3 class="tttt-subtitle">CHI PHÍ SẠC</h3>
+          <p class="tttt-price">6.000đ/Kwh</p>
+          <div class="input-box" onclick="showKeyboardB()">
+            <span class="input-text" id="inputValueB">Nhập số tiền mà quý khách muốn nạp</span>
+          </div>
+        `;
+      }
+    }
+
+    function startPaymentPollingB(ticketId) {
+      const pollInterval = setInterval(async () => {
+        try {
+          const response = await API.getTicket(ticketId);
+          if (response.status === 'paid') {
+            clearInterval(pollInterval);
+            showPaymentSuccessB();
+          }
+        } catch (error) {
+          console.error('Lỗi kiểm tra trạng thái thanh toán:', error);
+        }
+      }, 3000); // Kiểm tra mỗi 3 giây
+    }
+
+    function showPaymentSuccessB() {
+      const content = document.querySelector('.khung-b-trong .tttt-content');
+      if (content) {
+        content.innerHTML = `
+          <div style="text-align: center; padding: 20px;">
+            <div style="color: #28a745; font-size: 48px; margin-bottom: 15px;">✓</div>
+            <h2 style="color: #28a745; margin-bottom: 10px;">THANH TOÁN THÀNH CÔNG!</h2>
+            <p style="color: #666; margin-bottom: 20px;">Bạn có thể bắt đầu sạc xe</p>
+            <button onclick="resetPaymentInputB()" style="background: #28a745; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer;">Tiếp tục</button>
+          </div>
+        `;
+      }
+    }
+    
+    function inputKeyA(key) {
+      const inputA = document.getElementById('inputValueA');
+      if (inputA.textContent === 'Nhập số tiền mà quý khách muốn nạp') {
+        inputA.textContent = key;
+        inputA.style.color = '#000';
+      } else {
+        // Lấy số hiện tại, bỏ dấu phẩy, thêm số mới, rồi format lại
+        let currentValue = inputA.textContent.replace(/,/g, '');
+        if (currentValue === 'Nhập số tiền mà quý khách muốn nạp') {
+          currentValue = '';
+        }
+        let newValue = currentValue + key;
+        inputA.textContent = formatNumber(newValue);
+        inputA.style.color = '#000';
+      }
+    }
+    
+    // Hàm format số với dấu phẩy ngăn cách hàng nghìn
+    function formatNumber(num) {
+      return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    }
+    
+    function backspaceA() {
+      const inputA = document.getElementById('inputValueA');
+      if (inputA.textContent.length > 1) {
+        // Bỏ dấu phẩy, xóa 1 ký tự, rồi format lại
+        let currentValue = inputA.textContent.replace(/,/g, '');
+        if (currentValue.length > 1) {
+          let newValue = currentValue.slice(0, -1);
+          inputA.textContent = formatNumber(newValue);
+        } else {
+          inputA.textContent = 'Nhập số tiền mà quý khách muốn nạp';
+          inputA.style.color = '#666';
+        }
+      } else {
+        inputA.textContent = 'Nhập số tiền mà quý khách muốn nạp';
+        inputA.style.color = '#666';
+      }
+    }
+    
+    function clearInputA() {
+      const inputA = document.getElementById('inputValueA');
+      inputA.textContent = 'Nhập số tiền mà quý khách muốn nạp';
+      inputA.style.color = '#666';
+    }
+    
+    async function enterInputA() {
+      const inputA = document.getElementById('inputValueA');
+      const amount = inputA.textContent.replace(/[^\d]/g, '');
+      
+      if (amount && parseInt(amount) >= 10000) {
+        // Lưu thông tin thanh toán
+        Store.set('paymentAmount', parseInt(amount));
+        Store.set('selectedKhung', 'A');
+        
+        // Ẩn bàn phím
+        hideKeyboardA();
+        
+        // Hiển thị loading trong khung A
+        showPaymentLoadingA();
+        
+        try {
+          // Gọi API tạo ticket VNPAY
+          const chargePointId = Store.getChargePointId() || 'CP-001';
+          const connectorId = Store.getConnectorId() || 1;
+          
+          const response = await API.createTicket({ 
+            amount: parseInt(amount), 
+            chargePointId, 
+            connectorId, 
+            paymentMethod: 'vnpay' 
+          });
+          
+          // Hiển thị QR code trong khung A
+          showPaymentQRA(response, parseInt(amount));
+          
+        } catch (error) {
+          console.error('Lỗi tạo ticket VNPAY:', error);
+          alert('Không tạo được QR VNPAY. Kiểm tra kết nối hoặc backend.');
+          hidePaymentLoadingA();
+        }
+      } else {
+        alert('Số tiền không hợp lệ. Vui lòng nhập số tiền từ 10,000 VND trở lên.');
+      }
+    }
+    
+    // Hiển thị loading cho thanh toán trong khung A
+    function showPaymentLoadingA() {
+      const content = document.querySelector('.tttt-content');
+      if (content) {
+        content.innerHTML = `
+          <div style="text-align: center; padding: 20px;">
+            <div class="loading" style="display: inline-block; width: 40px; height: 40px; border: 4px solid #f3f3f3; border-top: 4px solid #007bff; border-radius: 50%; animation: spin 1s linear infinite;"></div>
+            <p style="margin-top: 15px; color: #666;">Đang tạo QR VNPAY...</p>
+          </div>
+        `;
+      }
+    }
+
+    // Ẩn loading cho thanh toán trong khung A
+    function hidePaymentLoadingA() {
+      const content = document.querySelector('.tttt-content');
+      if (content) {
+        content.innerHTML = `
+          <h2 class="tttt-title" style="white-space: nowrap; font-size: 16px;">THANH TOÁN TRỰC TIẾP</h2>
+          <h3 class="tttt-subtitle">CHI PHÍ SẠC</h3>
+          <p class="tttt-price">6.000đ/Kwh</p>
+          <div class="input-box" onclick="showKeyboardA()">
+            <span class="input-text" id="inputValueA">Nhập số tiền mà quý khách muốn nạp</span>
+          </div>
+        `;
+      }
+    }
+
+    // Hiển thị QR code cho thanh toán trong khung A
+    function showPaymentQRA(response, amount) {
+      const content = document.querySelector('.tttt-content');
+      if (content) {
+        let qrImageUrl = '';
+        
+        if (response.qrImageDataUrl) {
+          qrImageUrl = response.qrImageDataUrl;
+        } else if (response.payUrl) {
+          qrImageUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(response.payUrl)}`;
+        } else if (response.qrCode) {
+          qrImageUrl = `data:image/png;base64,${response.qrCode}`;
+        }
+        
+        content.innerHTML = `
+          <h2 class="tttt-title" style="margin-top: -15px; white-space: nowrap; font-size: 16px;">THANH TOÁN VNPAY</h2>
+          <h3 class="tttt-subtitle" style="margin-top: -10px;">Số tiền: ${formatNumber(amount)} VND</h3>
+          <div style="margin: 150px 0; text-align: center;">
+            <img src="${qrImageUrl}" alt="QR VNPAY" style="width: 150px; height: 150px; border: 2px solid #ddd; border-radius: 8px;" />
+          </div>
+          <p style="color: #666; font-size: 14px; margin-top: -130px; text-align: center;">Quét mã QR để thanh toán</p>
+          <button onclick="resetPaymentInputA()" style="background: #6c757d; color: white; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 12px; margin-top: 10px; margin-left: 180px;">Nhập lại</button>
+        `;
+        
+        // Bắt đầu theo dõi thanh toán
+        if (response.ticketId) {
+          startPaymentPollingA(response.ticketId);
+        }
+      }
+    }
+
+    // Reset input thanh toán về trạng thái ban đầu trong khung A
+    function resetPaymentInputA() {
+      const content = document.querySelector('.tttt-content');
+      if (content) {
+        content.innerHTML = `
+          <h2 class="tttt-title" style="white-space: nowrap; font-size: 16px;">THANH TOÁN TRỰC TIẾP</h2>
+          <h3 class="tttt-subtitle">CHI PHÍ SẠC</h3>
+          <p class="tttt-price">6.000đ/Kwh</p>
+          <div class="input-box" onclick="showKeyboardA()">
+            <span class="input-text" id="inputValueA">Nhập số tiền mà quý khách muốn nạp</span>
+          </div>
+        `;
+      }
+    }
+
+    // Theo dõi thanh toán cho khung A
+    function startPaymentPollingA(ticketId) {
+      const pollInterval = setInterval(async () => {
+        try {
+          const ticket = await API.getTicket(ticketId);
+          if (ticket.status === 'paid') {
+            clearInterval(pollInterval);
+            showPaymentSuccessA();
+          }
+        } catch (error) {
+          console.warn('Lỗi poll ticket:', error);
+        }
+      }, 3000);
+    }
+
+    // Hiển thị thông báo thanh toán thành công trong khung A
+    function showPaymentSuccessA() {
+      const content = document.querySelector('.tttt-content');
+      if (content) {
+        content.innerHTML = `
+          <div style="text-align: center; padding: 20px;">
+            <div style="color: #28a745; font-size: 48px; margin-bottom: 15px;">✓</div>
+            <h2 style="color: #28a745; margin-bottom: 10px; font-size: 16px;">THANH TOÁN THÀNH CÔNG</h2>
+            <p style="color: #666; margin-bottom: 15px; font-size: 12px;">Vui lòng cắm sạc để bắt đầu</p>
+            <button onclick="resetPaymentInputA()" style="background: #007bff; color: white; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-size: 12px;">Tiếp tục</button>
+          </div>
+        `;
+      }
+    }
+
+    // Hiển thị màn hình nhập số tiền cho khung A (từ nút)
+    function showPaymentInputA() {
+      // Chuyển sang trang thanh toán TTTT dual
+      window.location.href = 'trang2_dual_TTTT.html';
+    }
+  </script>
 </body>
 </html>
+

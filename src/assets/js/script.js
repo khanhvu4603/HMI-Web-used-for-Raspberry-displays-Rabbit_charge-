@@ -82,277 +82,98 @@ document.addEventListener('keydown', (event) => {
   if (currentPage === 'trang2.html' && event.key === '2') {
     window.location.href = 'trang2_2.html';
   }
-  
-  // Nếu đang ở trang 2_1 và nhấn phím 0
-  if (currentPage === 'trang2_1.html' && event.key === '0') {
-    window.location.href = 'trang2.html';
-  }
-  
-  // Nếu đang ở trang 2_2 và nhấn phím 0
-  if (currentPage === 'trang2_2.html' && event.key === '0') {
-    window.location.href = 'trang2.html';
-  }
-  
-  // Nếu đang ở trang 2_1_TTTT và nhấn phím 0
-  if (currentPage === 'trang2_1_TTTT.html' && event.key === '0') {
-    window.location.href = 'trang2.html';
-  }
-  
-  // Nếu đang ở trang 2_1_app và nhấn phím 0
-  if (currentPage === 'trang2_1_app.html' && event.key === '0') {
-    window.location.href = 'trang2.html';
-  }
-  
-  // Nếu đang ở trang 2_2_TTTT và nhấn phím 0
-  if (currentPage === 'trang2_2_TTTT.html' && event.key === '0') {
-    window.location.href = 'trang2.html';
-  }
-  
-  // Nếu đang ở trang 2_2_app và nhấn phím 0
-  if (currentPage === 'trang2_2_app.html' && event.key === '0') {
-    window.location.href = 'trang2.html';
-  }
-  
-  // Nếu đang ở trang dual và nhấn phím 0 - quay về trang 2
-  if ((currentPage === 'trang2_dual.html' || 
-       currentPage === 'trang2_dual_TTTT.html' || 
-       currentPage === 'trang2_dual_app.html') && event.key === '0') {
-    window.location.href = 'trang2.html';
-  }
-  
-  // Nếu đang ở trang dual và nhấn phím 1 - chỉ hiển thị khung A
-  if (currentPage === 'trang2_dual.html' && event.key === '1') {
-    window.location.href = 'trang2_1.html';
-  }
-  if (currentPage === 'trang2_dual_TTTT.html' && event.key === '1') {
-    window.location.href = 'trang2_1_TTTT.html';
-  }
-  if (currentPage === 'trang2_dual_app.html' && event.key === '1') {
-    window.location.href = 'trang2_1_app.html';
-  }
-  
-  // Nếu đang ở trang dual và nhấn phím 2 - chỉ hiển thị khung B
-  if (currentPage === 'trang2_dual.html' && event.key === '2') {
-    window.location.href = 'trang2_2.html';
-  }
-  if (currentPage === 'trang2_dual_TTTT.html' && event.key === '2') {
-    window.location.href = 'trang2_2_TTTT.html';
-  }
-  if (currentPage === 'trang2_dual_app.html' && event.key === '2') {
-    window.location.href = 'trang2_2_app.html';
-  }
-  
-  // Chuyển từ trang 2_1 sang trang 2_2 (phím 2) - hiển thị cả hai
-  if ((currentPage === 'trang2_1.html' || 
-       currentPage === 'trang2_1_TTTT.html' || 
-       currentPage === 'trang2_1_app.html') && event.key === '2') {
-    // Xác định trang dual tương ứng
-    if (currentPage === 'trang2_1_TTTT.html') {
-      window.location.href = 'trang2_dual_TTTT.html';
-    } else if (currentPage === 'trang2_1_app.html') {
-      window.location.href = 'trang2_dual_app.html';
-    } else {
-      window.location.href = 'trang2_dual.html';
-    }
-  }
-  
-  // Chuyển từ trang 2_2 sang trang 2_1 (phím 1) - hiển thị cả hai
-  if ((currentPage === 'trang2_2.html' || 
-       currentPage === 'trang2_2_TTTT.html' || 
-       currentPage === 'trang2_2_app.html') && event.key === '1') {
-    // Xác định trang dual tương ứng
-    if (currentPage === 'trang2_2_TTTT.html') {
-      window.location.href = 'trang2_dual_TTTT.html';
-    } else if (currentPage === 'trang2_2_app.html') {
-      window.location.href = 'trang2_dual_app.html';
-    } else {
-      window.location.href = 'trang2_dual.html';
-    }
-  }
-  
-  // Chuyển từ trang 2_1_TTTT sang trang 2_2_TTTT (phím 2) - hiển thị cả hai
-  if (currentPage === 'trang2_1_TTTT.html' && event.key === '2') {
-    window.location.href = 'trang2_dual_TTTT.html';
-  }
-  
-  // Chuyển từ trang 2_2_TTTT sang trang 2_1_TTTT (phím 1) - hiển thị cả hai
-  if (currentPage === 'trang2_2_TTTT.html' && event.key === '1') {
-    window.location.href = 'trang2_dual_TTTT.html';
-  }
-  
-  // Chuyển từ trang 2_1_app sang trang 2_2_app (phím 2) - hiển thị cả hai
-  if (currentPage === 'trang2_1_app.html' && event.key === '2') {
-    window.location.href = 'trang2_dual_app.html';
-  }
-  
-  // Chuyển từ trang 2_2_app sang trang 2_1_app (phím 1) - hiển thị cả hai
-  if (currentPage === 'trang2_2_app.html' && event.key === '1') {
-    window.location.href = 'trang2_dual_app.html';
-  }
-  
-  // Chuyển từ trang 2_1_TTTT sang trang 2_1_TrangThaiSac (phím 4) - sau khi hiện QR
-  if (currentPage === 'trang2_1_TTTT.html' && event.key === '4') {
-    window.location.href = 'trang2_1_TrangThaiSac.html';
-  }
-  
-  // Chuyển từ trang 2_2_TTTT sang trang 2_2_TrangThaiSac (phím 4) - sau khi hiện QR
-  if (currentPage === 'trang2_2_TTTT.html' && event.key === '4') {
-    window.location.href = 'trang2_2_TrangThaiSac.html';
-  }
-  
-  // Chuyển từ trang 2_2_TTTT sang trang 2_2_TrangThaiSac (phím 5) - sau khi hiện QR
-  if (currentPage === 'trang2_2_TTTT.html' && event.key === '5') {
-    window.location.href = 'trang2_2_TrangThaiSac.html';
-  }
-  
-  // Chuyển từ trang 2_1 sang trang 2_dual (phím 2) - hiển thị cả hai khung cơ bản
+
+  // Nếu đang ở trang2_1 và nhấn phím 2 sẽ sang trang2_dual với khung A Buttons, khung B Buttons
   if (currentPage === 'trang2_1.html' && event.key === '2') {
     window.location.href = 'trang2_dual.html';
   }
-  
-  // Chuyển từ trang 2_1_TTTT sang trang 2_dual_QR_Buttons_B (phím 2) - khung A có QR, khung B có nút thanh toán
-  if (currentPage === 'trang2_1_TTTT.html' && event.key === '2') {
-    window.location.href = 'trang2_dual_QR_Buttons_B.html';
-  }
-  
-  // Chuyển từ trang 2_1_TTTT sang trang 2_dual_TTTT_Buttons_B (phím 1) - khung A có nút thanh toán, khung B TTTT
-  if (currentPage === 'trang2_1_TTTT.html' && event.key === '1') {
-    window.location.href = 'trang2_dual_TTTT_Buttons_B.html';
-  }
-  
-  // Chuyển từ trang 2_1_TrangThaiSac sang trang 2_dual_TrangThaiDangSac_A (phím 2) - khung A đang sạc, khung B có nút thanh toán
-  if (currentPage === 'trang2_1_TrangThaiSac.html' && event.key === '2') {
-    window.location.href = 'trang2_dual_TrangThaiDangSac_A.html';
-  }
-  
-  // Chuyển từ trang 2_2 sang trang 2_dual (phím 1) - hiển thị cả hai khung cơ bản
+
+  // Nếu đang ở trang2_2 và nhấn phím 1 sẽ sang trang2_dual với khung A Buttons, khung B Buttons
   if (currentPage === 'trang2_2.html' && event.key === '1') {
     window.location.href = 'trang2_dual.html';
   }
+
+  // Chuyển từ trang 2_1_TTTT sang trang 2_dual_TTTT_Buttons_A (phím 2) - khung A TTTT, khung B Buttons
+  if (currentPage === 'trang2_1_TTTT.html' && event.key === '2') {
+    window.location.href = 'trang2_dual_TTTT_Buttons_A.html';
+  }  
   
-  // Chuyển từ trang 2_2_TTTT sang trang 2_dual_TTTT_Buttons_B (phím 1) - khung A có nút thanh toán, khung B TTTT
+  // Chuyển từ trang 2_2_TTTT sang trang 2_dual_TTTT_Buttons_B (phím 1) - khung A Buttons, khung B TTTT
   if (currentPage === 'trang2_2_TTTT.html' && event.key === '1') {
     window.location.href = 'trang2_dual_TTTT_Buttons_B.html';
+  }  
+
+  // Nếu đang ở trang2_1_TTTT mà khung A có QR và nhấn phím 2 thì sang trang dual QR_Buttons_A
+  if (currentPage === 'trang2_1_TTTT.html' && event.key === '2') {
+    // Kiểm tra xem có QR code đang hiển thị không (có paymentAmount trong Store)
+    const paymentAmount = Store ? Store.get('paymentAmount') : null;
+    if (paymentAmount) {
+      window.location.href = 'trang2_dual_QR_Buttons_A.html';
+    } else {
+      // Nếu chưa có QR, chuyển sang trang dual TTTT_Buttons_A
+      window.location.href = 'trang2_dual_TTTT_Buttons_A.html';
+    }
   }
-  
-  // Chuyển từ trang 2_2_TrangThaiSac sang trang 2_dual_TrangThaiDangSac_B (phím 1) - khung A có nút thanh toán, khung B đang sạc
-  if (currentPage === 'trang2_2_TrangThaiSac.html' && event.key === '1') {
-    window.location.href = 'trang2_dual_TrangThaiDangSac_B.html';
-  }
-  
-  // Chuyển từ trang 2_dual_TrangThaiDangSac về trang đơn lẻ (phím 0)
-  if (currentPage === 'trang2_dual_TrangThaiDangSac.html' && event.key === '0') {
-    // Có thể quay về trang2.html hoặc trang trước đó
-    window.location.href = 'trang2.html';
-  }
-  
-  // Chuyển từ trang 2_dual_TrangThaiDangSac sang trang 2_1_TrangThaiSac (phím 1)
-  if (currentPage === 'trang2_dual_TrangThaiDangSac.html' && event.key === '1') {
-    window.location.href = 'trang2_1_TrangThaiSac.html';
-  }
-  
-  // Chuyển từ trang 2_dual_TrangThaiDangSac sang trang 2_2_TrangThaiSac (phím 2)
-  if (currentPage === 'trang2_dual_TrangThaiDangSac.html' && event.key === '2') {
-    window.location.href = 'trang2_2_TrangThaiSac.html';
-  }
-  
-  // Chuyển từ trang 2_dual_TrangThaiDangSac_A về trang 2_1_TrangThaiSac (phím 1)
-  if (currentPage === 'trang2_dual_TrangThaiDangSac_A.html' && event.key === '1') {
-    window.location.href = 'trang2_1_TrangThaiSac.html';
-  }
-  
-  // Chuyển từ trang 2_dual_TrangThaiDangSac_A về trang2.html (phím 0)
-  if (currentPage === 'trang2_dual_TrangThaiDangSac_A.html' && event.key === '0') {
-    window.location.href = 'trang2.html';
-  }
-  
-  // Chuyển từ trang 2_dual_TrangThaiDangSac_B về trang 2_2_TrangThaiSac (phím 2)
-  if (currentPage === 'trang2_dual_TrangThaiDangSac_B.html' && event.key === '2') {
-    window.location.href = 'trang2_2_TrangThaiSac.html';
-  }
-  
-  // Chuyển từ trang 2_dual_TrangThaiDangSac_B về trang2.html (phím 0)
-  if (currentPage === 'trang2_dual_TrangThaiDangSac_B.html' && event.key === '0') {
-    window.location.href = 'trang2.html';
-  }
-  
-  // Chuyển từ trang 2_dual_TrangThaiDangSac_A sang trang2_dual_TrangThaiDangSac (phím 5) - khi đang hiển thị QR
-  if (currentPage === 'trang2_dual_TrangThaiDangSac_A.html' && event.key === '5') {
-    window.location.href = 'trang2_dual_TrangThaiDangSac.html';
-  }
-  
-  // Chuyển từ trang 2_dual_TrangThaiDangSac_B sang trang2_dual_TrangThaiDangSac (phím 5) - khi đang hiển thị QR
-  if (currentPage === 'trang2_dual_TrangThaiDangSac_B.html' && event.key === '5') {
-    window.location.href = 'trang2_dual_TrangThaiDangSac.html';
-  }
-  
-  // Chuyển từ trang 2_dual_TTTT_Buttons_A sang trang 2_dual_TTTT_Buttons_B (phím 2)
-  if (currentPage === 'trang2_dual_TTTT_Buttons_A.html' && event.key === '2') {
-    window.location.href = 'trang2_dual_TTTT_Buttons_B.html';
-  }
-  
-  // Chuyển từ trang 2_dual_TTTT_Buttons_A về trang 2_1_TTTT (phím 1)
-  if (currentPage === 'trang2_dual_TTTT_Buttons_A.html' && event.key === '1') {
-    window.location.href = 'trang2_1_TTTT.html';
-  }
-  
-  // Chuyển từ trang 2_dual_TTTT_Buttons_A về trang2.html (phím 0)
-  if (currentPage === 'trang2_dual_TTTT_Buttons_A.html' && event.key === '0') {
-    window.location.href = 'trang2.html';
-  }
-  
-  // Chuyển từ trang 2_dual_TTTT_Buttons_B sang trang 2_dual_TTTT_Buttons_A (phím 1)
-  if (currentPage === 'trang2_dual_TTTT_Buttons_B.html' && event.key === '1') {
-    window.location.href = 'trang2_dual_TTTT_Buttons_A.html';
-  }
-  
-  // Chuyển từ trang 2_dual_TTTT_Buttons_B về trang 2_2_TTTT (phím 2)
-  if (currentPage === 'trang2_dual_TTTT_Buttons_B.html' && event.key === '2') {
-    window.location.href = 'trang2_2_TTTT.html';
-  }
-  
-  // Chuyển từ trang 2_dual_TTTT_Buttons_B về trang2.html (phím 0)
-  if (currentPage === 'trang2_dual_TTTT_Buttons_B.html' && event.key === '0') {
-    window.location.href = 'trang2.html';
-  }
-  
-  // Navigation cho trang 2_dual_QR_Buttons_B
-  if (currentPage === 'trang2_dual_QR_Buttons_B.html' && event.key === '0') {
-    window.location.href = 'trang2.html';
-  }
-  
-  if (currentPage === 'trang2_dual_QR_Buttons_B.html' && event.key === '1') {
-    window.location.href = 'trang2_1_TTTT.html';
-  }
-  
-  // Navigation từ trang có QR ở khung A, nhấn phím 4 → A charging, B buttons
-  if (currentPage === 'trang2_dual_QR_Buttons_B.html' && event.key === '4') {
-    window.location.href = 'trang2_dual_ChargingA_ButtonsB.html';
-  }
-  
-  // Navigation từ trang có QR ở khung B, nhấn phím 5 → A buttons, B charging  
-  if (currentPage === 'trang2_dual_QR_Buttons_A.html' && event.key === '5') {
-    window.location.href = 'trang2_dual_ButtonsA_ChargingB.html';
-  }
-  
-  // Navigation cho trang 2_dual_ChargingA_ButtonsB
-  if (currentPage === 'trang2_dual_ChargingA_ButtonsB.html' && event.key === '0') {
-    window.location.href = 'trang2.html';
-  }
-  
-  if (currentPage === 'trang2_dual_ChargingA_ButtonsB.html' && event.key === '2') {
-    window.location.href = 'trang2_dual_TrangThaiDangSac_A.html';
-  }
-  
-  // Navigation cho trang 2_dual_ButtonsA_ChargingB
-  if (currentPage === 'trang2_dual_ButtonsA_ChargingB.html' && event.key === '0') {
-    window.location.href = 'trang2.html';
-  }
-  
-  if (currentPage === 'trang2_dual_ButtonsA_ChargingB.html' && event.key === '1') {
-    window.location.href = 'trang2_dual_TrangThaiDangSac_B.html';
-  }
-  
+
+    // Nếu đang ở trang2_2_TTTT mà khung B có QR và nhấn phím 1 thì sang trang dual QR_Buttons_B
+    if (currentPage === 'trang2_2_TTTT.html' && event.key === '1') {
+      // Kiểm tra xem có QR code đang hiển thị không (có paymentAmount trong Store)
+      const paymentAmount = Store ? Store.get('paymentAmount') : null;
+      if (paymentAmount) {
+        window.location.href = 'trang2_dual_QR_Buttons_B.html';
+      } else {
+        // Nếu chưa có QR, chuyển sang trang dual TTTT_Buttons_B
+        window.location.href = 'trang2_dual_TTTT_Buttons_B.html';
+      }
+    }
+
+    // Nếu đang ở bất kỳ trang nào mà khung A có QR và nhấn phím 4 thì sang trang dual ChargingA_ButtonsB
+    if (event.key === '4') {
+      // Kiểm tra xem có QR code đang hiển thị trong khung A không
+      const paymentAmount = Store ? Store.get('paymentAmount') : null;
+      if (paymentAmount) {
+        if(currentPage === 'trang2_1_TTTT.html') {
+          window.location.href = 'trang2_1_TrangThaiSac.html';
+        }
+        if(currentPage === 'trang2_dual_TTTT_Buttons_A.html') {
+          window.location.href = 'trang2_dual_TrangThaiDangSac_A.html';
+        }
+        if(currentPage === 'trang2_dual_QR_Buttons_A.html') {
+          window.location.href = 'trang2_dual_TrangThaiDangSac_A.html';
+        }
+        if(currentPage === 'trang2_dual_TrangThaiDangSac_B.html') {
+          window.location.href = 'trang2_dual_TrangThaiDangSac.html';
+        }
+      }
+    }
+
+    // Nếu đang ở bất kỳ trang nào mà khung B có QR và nhấn phím 5 thì sang trang dual ButtonsA_ChargingB
+    if (event.key === '5') {
+      // Kiểm tra xem có QR code đang hiển thị trong khung A không
+      const paymentAmount = Store ? Store.get('paymentAmount') : null;
+      if (paymentAmount) {
+        if(currentPage === 'trang2_2_TTTT.html') {
+          window.location.href = 'trang2_2_TrangThaiSac.html';
+        }
+        if(currentPage === 'trang2_dual_TTTT_Buttons_B.html') {
+          window.location.href = 'trang2_dual_TrangThaiDangSac_B.html';
+        }
+
+        if(currentPage === 'trang2_dual_QR_Buttons_B.html') {
+          window.location.href = 'trang2_dual_TrangThaiDangSac_B.html';
+        }
+        if(currentPage === 'trang2_dual_TrangThaiDangSac_A.html') {
+          window.location.href = 'trang2_dual_TrangThaiDangSac.html';
+        }
+      }
+    }
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // Logic tổng quát: từ bất kỳ trang phụ nào của trang 2 nhấn phím 0 đều quay về trang2
+    if (currentPage.startsWith('trang2_') && currentPage !== 'trang2.html' && event.key === '0') {
+      window.location.href = 'trang2.html';
+    }
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////  
 });
   
   // Thời gian realtime (dd/mm/yy hh:mm:ss), cập nhật mỗi giây

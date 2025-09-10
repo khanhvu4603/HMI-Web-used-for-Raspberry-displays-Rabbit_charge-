@@ -64,10 +64,58 @@
         </div>
       </div>
 
-      <!-- Khung B (bên phải) - ĐANG SẠC -->
+      <!-- Khung B (bên phải) - Sạc DC -->
       <div class="khung-b-trong">
         <img src="../assets/images/khung_trong_B.png" alt="Khung B trống" />
+        
+        <!-- Thông tin sạc DC -->
+        <div class="charging-info-dc" style="position: absolute; top: 10%; left: 50%; transform: translateX(-50%); z-index: 10; text-align: center; color: #333; margin-top: 20px;">
+          <!-- Tiêu đề khung B -->
+          <div style="margin-bottom: 15px;">
+            <h3 style="font-size: 18px; color: #28a745; margin: 0; font-weight: bold; margin-left: 140px;">SẠC DC</h3>
+          </div>
+          
+          <!-- Năng lượng -->
+          <div style="display: flex; justify-content: center; margin-bottom: 15px;">
+            <div style="display: flex; align-items: center; justify-content: center;">
+              <div id="kwh-dc" style="border: 2px solid #28a745; padding: 8px 12px; background: white; border-radius: 8px; min-width: 80px; font-size: 16px; font-weight: bold; color: #28a745; margin-right: 8px;">0</div>
+              <span style="font-weight: bold; font-size: 14px; color: #666;">kWh</span>
+            </div>
+          </div>
+        </div>
+        
+        <!-- GIF Animation -->
         <img src="../assets/images/gifmaker_me.gif" alt="GIF Animation" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 80%; height: auto; z-index: 5;" />
+        
+        <!-- SOC đè lên GIF -->
+        <div id="battery-percent" style="position: absolute; top: 45%; left: 50%; transform: translate(-50%, -50%); z-index: 15; font-size: 21px; color: #28a745; font-weight: bold; background: white; padding: 8px 12px; border-radius: 8px; border: 2px solid #28a745;">0%</div>
+        
+        <!-- Thông tin phiên sạc DC -->
+        <div style="position: absolute; bottom: 4%; left: 50%; transform: translateX(-50%); z-index: 10; text-align: center; color: #333;">
+          <h3 style="margin-bottom: 15px; font-size: 18px; color: #333; font-weight: bold;">Thông tin phiên sạc DC:</h3>
+          
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
+            <div style="display: flex; align-items: center; justify-content: center;">
+              <span style="font-weight: bold; font-size: 14px; color: #666; margin-right: 8px;">U (V):</span>
+              <div id="voltage" style="border: 2px solid #28a745; padding: 8px 12px; background: white; border-radius: 8px; min-width: 70px; font-size: 16px; font-weight: bold; color: #28a745;">0</div>
+            </div>
+            <div style="display: flex; align-items: center; justify-content: center;">
+              <span style="font-weight: bold; font-size: 14px; color: #666; margin-right: 8px;">I (A):</span>
+              <div id="current" style="border: 2px solid #28a745; padding: 8px 12px; background: white; border-radius: 8px; min-width: 70px; font-size: 16px; font-weight: bold; color: #28a745;">0</div>
+            </div>
+          </div>
+          
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+            <div style="display: flex; align-items: center; justify-content: center;">
+              <span style="font-weight: bold; font-size: 14px; color: #666; margin-right: 8px;">P (W):</span>
+              <div id="power" style="border: 2px solid #28a745; padding: 8px 12px; background: white; border-radius: 8px; min-width: 70px; font-size: 16px; font-weight: bold; color: #28a745;">0</div>
+            </div>
+            <div style="display: flex; align-items: center; justify-content: center;">
+              <span style="font-weight: bold; font-size: 14px; color: #666; margin-right: 8px;">E (kWh):</span>
+              <div id="energy" style="border: 2px solid #28a745; padding: 8px 12px; background: white; border-radius: 8px; min-width: 70px; font-size: 16px; font-weight: bold; color: #28a745;">0</div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -101,6 +149,7 @@
 
   <script src="../assets/js/config.js"></script>
   <script src="../assets/js/api.js"></script>
+  <script src="../assets/js/plc-websocket.js"></script>
   <script src="../assets/js/script.js"></script>
   
   <script>
