@@ -76,6 +76,7 @@ echo
 
 # Lệnh Chrome tối ưu cho Raspberry Pi
 $CHROME_CMD --kiosk --app=http://localhost:8080 \
+    --user-data-dir="/tmp/hmi-kiosk-data" \
     --disable-web-security \
     --no-first-run \
     --disable-default-apps \
