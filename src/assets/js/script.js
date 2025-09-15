@@ -56,6 +56,7 @@ document.querySelectorAll('.khung-button').forEach(btn => {
 // Điều hướng bằng phím số
 document.addEventListener('keydown', (event) => {
   const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+  console.log('🔍 Key pressed:', event.key, 'Current page:', currentPage);
   
   // Thoát ứng dụng bằng Ctrl+Q hoặc Escape (chỉ dành cho admin)
   if ((event.ctrlKey && event.key === 'q') || event.key === 'Escape') {
@@ -93,16 +94,6 @@ document.addEventListener('keydown', (event) => {
     window.location.href = 'trang2_dual.html';
   }
 
-  // Chuyển từ trang 2_1_TTTT sang trang 2_dual_TTTT_Buttons_A (phím 2) - khung A TTTT, khung B Buttons
-  if (currentPage === 'trang2_1_TTTT.html' && event.key === '2') {
-    window.location.href = 'trang2_dual_TTTT_Buttons_A.html';
-  }  
-  
-  // Chuyển từ trang 2_2_TTTT sang trang 2_dual_TTTT_Buttons_B (phím 1) - khung A Buttons, khung B TTTT
-  if (currentPage === 'trang2_2_TTTT.html' && event.key === '1') {
-    window.location.href = 'trang2_dual_TTTT_Buttons_B.html';
-  }  
-
   // Nếu đang ở trang2_1_TTTT mà khung A có QR và nhấn phím 2 thì sang trang dual QR_Buttons_A
   if (currentPage === 'trang2_1_TTTT.html' && event.key === '2') {
     // Kiểm tra xem có QR code đang hiển thị không (có paymentAmount trong Store)
@@ -115,31 +106,48 @@ document.addEventListener('keydown', (event) => {
     }
   }
 
-    // Nếu đang ở trang2_2_TTTT mà khung B có QR và nhấn phím 1 thì sang trang dual QR_Buttons_B
-    if (currentPage === 'trang2_2_TTTT.html' && event.key === '1') {
-      // Kiểm tra xem có QR code đang hiển thị không (có paymentAmount trong Store)
-      const paymentAmount = Store ? Store.get('paymentAmount') : null;
-      if (paymentAmount) {
-        window.location.href = 'trang2_dual_QR_Buttons_B.html';
-      } else {
-        // Nếu chưa có QR, chuyển sang trang dual TTTT_Buttons_B
-        window.location.href = 'trang2_dual_TTTT_Buttons_B.html';
-      }
+  // Nếu đang ở trang2_2_TTTT mà khung B có QR và nhấn phím 1 thì sang trang dual QR_Buttons_B
+  if (currentPage === 'trang2_2_TTTT.html' && event.key === '1') {
+    // Kiểm tra xem có QR code đang hiển thị không (có paymentAmount trong Store)
+    const paymentAmount = Store ? Store.get('paymentAmount') : null;
+    const selectedKhung = Store ? Store.get('selectedKhung') : null;
+    
+    console.log('🔍 Debug phím 1 trang2_2_TTTT:', { paymentAmount, selectedKhung });
+    console.log('🔍 Store toàn bộ:', Store ? Store.getAll() : 'Store không tồn tại');
+    
+    if (paymentAmount) {
+      console.log('✅ Có QR, chuyển đến trang2_dual_QR_Buttons_B.html');
+      window.location.href = 'trang2_dual_QR_Buttons_B.html';
+    } else {
+      console.log('❌ Chưa có QR, chuyển đến trang2_dual_TTTT_Buttons_B.html');
+      console.log('❌ Lý do: paymentAmount =', paymentAmount);
+      // Nếu chưa có QR, chuyển sang trang dual TTTT_Buttons_B
+      window.location.href = 'trang2_dual_TTTT_Buttons_B.html';
     }
+  }
 
-    // Nếu đang ở bất kỳ trang nào mà khung A có QR và nhấn phím 4 thì sang trang dual ChargingA_ButtonsB
-    if (event.key === '4') {
-      // Kiểm tra xem có QR code đang hiển thị trong khung A không
-      const paymentAmount = Store ? Store.get('paymentAmount') : null;
-      if (paymentAmount) {
-        if(currentPage === 'trang2_1_TTTT.html') {
-          window.location.href = 'trang2_1_TrangThaiSac.html';
+  // Nếu đang ở bất kỳ trang nào mà khung A có QR và nhấn phím 4 thì sang trang dual ChargingA_ButtonsB
+  if (event.key === '4') {
+    // Kiểm tra xem có QR code đang hiển thị trong khung A không
+    const paymentAmount = Store ? Store.get('paymentAmount') : null;
+    if (paymentAmount) {
+      if(currentPage === 'trang2_1_TTTT.html') {
+        window.location.href = 'trang2_1_TrangThaiSac.html';
+      }
+      if(currentPage === 'trang2_dual_TTTT_Buttons_A.html') {
+        window.location.href = 'trang2_dual_TrangThaiDangSac_A.html';
+      }
+      if(currentPage === 'trang2_dual_QR_Buttons_A.html') {
+        window.location.href = 'trang2_dual_TrangThaiDangSac_A.html';
+      }
+      if(currentPage === 'trang2_dual_QR_TTTT.html') {
+        window.location.href = 'trang2_dual_TrangThaiDangSacA_TTTT.html';
+      }
+        if(currentPage === 'trang2_dual_TTTT.html') {
+          window.location.href = 'trang2_dual_TrangThaiDangSac_QR.html';
         }
-        if(currentPage === 'trang2_dual_TTTT_Buttons_A.html') {
-          window.location.href = 'trang2_dual_TrangThaiDangSac_A.html';
-        }
-        if(currentPage === 'trang2_dual_QR_Buttons_A.html') {
-          window.location.href = 'trang2_dual_TrangThaiDangSac_A.html';
+        if(currentPage === 'trang2_dual_QR_TrangThaiDangSac.html') {
+          window.location.href = 'trang2_dual_TrangThaiDangSac.html';
         }
         if(currentPage === 'trang2_dual_TrangThaiDangSac_B.html') {
           window.location.href = 'trang2_dual_TrangThaiDangSac.html';
@@ -161,6 +169,15 @@ document.addEventListener('keydown', (event) => {
 
         if(currentPage === 'trang2_dual_QR_Buttons_B.html') {
           window.location.href = 'trang2_dual_TrangThaiDangSac_B.html';
+        }
+        if(currentPage === 'trang2_dual_TTTT_QR.html') {
+          window.location.href = 'trang2_dual_TTTT_TrangThaiDangSacB.html';
+        }
+        if(currentPage === 'trang2_dual_TTTT.html') {
+          window.location.href = 'trang2_dual_QR_TrangThaiDangSac.html';
+        }
+        if(currentPage === 'trang2_dual_TrangThaiDangSac_QR.html') {
+          window.location.href = 'trang2_dual_TrangThaiDangSac.html';
         }
         if(currentPage === 'trang2_dual_TrangThaiDangSac_A.html') {
           window.location.href = 'trang2_dual_TrangThaiDangSac.html';
@@ -275,6 +292,17 @@ async function enterInput() {
     const amount = parseInt(finalValue.replace(/,/g, ''));
     if (amount && amount >= 10000) {
       Store.set('paymentAmount', amount);
+      
+      // Xác định khung nào đang có TTTT dựa trên trang hiện tại
+      if (currentPage === 'trang2_1_TTTT.html') {
+        Store.set('selectedKhung', 'A'); // Khung A có TTTT
+        console.log('💾 Đã lưu Store trang2_1_TTTT:', { amount, selectedKhung: 'A' });
+      } else if (currentPage === 'trang2_2_TTTT.html') {
+        Store.set('selectedKhung', 'B'); // Khung B có TTTT
+        console.log('💾 Đã lưu Store trang2_2_TTTT:', { amount, selectedKhung: 'B' });
+      }
+      
+      console.log('💾 Store sau khi lưu:', Store.getAll());
       
       // Ẩn bàn phím trước
       hideKeyboard();

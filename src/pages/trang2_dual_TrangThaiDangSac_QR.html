@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Trang 2 Dual - Khung A đang sạc, Khung B QR</title>
+  <link rel="stylesheet" href="../assets/css/styles.css"/>
+  <style>
+    /* Container cho hiển thị cả hai khung */
+    .dual-container {
+      position: absolute;
+      width: 100%;
+      height: 100vh;
+    }
+    
+    /* Override CSS cho trang dual - điều chỉnh vị trí khung A */
+    .khung-a-trong {
+      position: absolute;
+      top: 19.8%;
+      left: 22.15%;
+      width: 28%;
+      height: 71.5%;
+      z-index: 10;
+    }
+    
+    /* Override CSS cho trang dual - điều chỉnh vị trí khung B */
+    .khung-b-trong {
+      position: absolute;
+      top: 19.6%;
+      right: 22.2%;
+      width: 28%;
+      height: 71.5%;
+      z-index: 10;
+    }
+  </style>
+</head>
+<body data-page="trang2_dual_TrangThaiDangSac_QR">
+  <main class="stage">
+    <!-- ẢNH NỀN: sử dụng ảnh trang2.jpg -->
+    <img class="slide-img" src="../assets/images/trang2.jpg" alt="Trang 2 Dual - Khung A đang sạc, Khung B QR" />
+    
+    <!-- Container chứa cả hai khung -->
+    <div class="dual-container">
+      <!-- Khung A (bên trái) - Sạc AC -->
+      <div class="khung-a-trong">
+        <img src="../assets/images/khung_trong_A.png" alt="Khung A trống" />
+        
+        <!-- Thông tin sạc AC -->
+        <div class="charging-info-ac" style="position: absolute; top: 10%; left: 50%; transform: translateX(-50%); z-index: 10; text-align: center; color: #333; margin-top: 20px;">
+          <!-- Tiêu đề khung A -->
+          <div style="margin-bottom: 15px;">
+            <h3 style="font-size: 18px; color: #007bff; margin: 0; font-weight: bold; margin-left: 140px;">SẠC AC</h3>
+          </div>
+          
+          <!-- kWh lên trên -->
+          <div style="display: flex; justify-content: center; margin-bottom: 15px;">
+            <div style="display: flex; align-items: center; justify-content: center;">
+              <div id="kwh-ac" style="border: 2px solid #007bff; padding: 8px 12px; background: white; border-radius: 8px; min-width: 80px; font-size: 16px; font-weight: bold; color: #007bff; margin-right: 8px;">0</div>
+              <span style="font-weight: bold; font-size: 14px; color: #666;">kWh</span>
+            </div>
+          </div>
+        </div>
+        
+        <!-- GIF Animation -->
+        <img src="../assets/images/gifmaker_me.gif" alt="GIF Animation" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 80%; height: auto; z-index: 5;" />
+        
+        <!-- Thông tin phiên sạc AC -->
+        <div style="position: absolute; bottom: 10%; left: 50%; transform: translateX(-50%); z-index: 10; text-align: center; color: #333;">
+          <h3 style="margin-bottom: 15px; font-size: 18px; color: #333; font-weight: bold;">Thông tin phiên sạc AC:</h3>
+          
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+            <div style="display: flex; align-items: center; justify-content: center;">
+              <span style="font-weight: bold; font-size: 14px; color: #666; margin-right: 8px;">P (W):</span>
+              <div id="power-ac" style="border: 2px solid #007bff; padding: 8px 12px; background: white; border-radius: 8px; min-width: 80px; font-size: 16px; font-weight: bold; color: #007bff;">0</div>
+            </div>
+            <div style="display: flex; align-items: center; justify-content: center;">
+              <span style="font-weight: bold; font-size: 14px; color: #666; margin-right: 8px;">E (kWh):</span>
+              <div id="energy-ac" style="border: 2px solid #007bff; padding: 8px 12px; background: white; border-radius: 8px; min-width: 80px; font-size: 16px; font-weight: bold; color: #007bff;">0</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Khung B (bên phải) - THANH TOÁN TRỰC TIẾP -->
+      <div class="khung-b-trong">
+        <img src="../assets/images/khung_trong.png" alt="Khung B trống" />
+        <div class="tttt-content" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 10;">
+          <h2 class="tttt-title" style="white-space: nowrap; font-size: 16px;">THANH TOÁN TRỰC TIẾP</h2>
+          <h3 class="tttt-subtitle">CHI PHÍ SẠC</h3>
+          <p class="tttt-price">6.000đ/Kwh</p>
+          <div class="input-box" onclick="showKeyboardB()">
+            <span class="input-text" id="inputValueB">Nhập số tiền mà quý khách muốn nạp</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Thời gian realtime -->
+    <div class="timestamp" id="current-time"></div>
+  </main>
+
+  <!-- Virtual Keyboard -->
+  <div class="keyboard" id="keyboard">
+    <div class="keyboard-row">
+      <div class="keyboard-key" onclick="inputKey('1')">1</div>
+      <div class="keyboard-key" onclick="inputKey('2')">2</div>
+      <div class="keyboard-key" onclick="inputKey('3')">3</div>
+      <div class="keyboard-key" onclick="inputKey('4')">4</div>
+      <div class="keyboard-key" onclick="inputKey('5')">5</div>
+      <div class="keyboard-key" onclick="inputKey('6')">6</div>
+      <div class="keyboard-key" onclick="inputKey('7')">7</div>
+      <div class="keyboard-key" onclick="inputKey('8')">8</div>
+      <div class="keyboard-key" onclick="inputKey('9')">9</div>
+      <div class="keyboard-key" onclick="inputKey('0')">0</div>
+    </div>
+    <div class="keyboard-row">
+      <div class="keyboard-key wide" onclick="backspace()">⌫</div>
+      <div class="keyboard-key wide" onclick="clearInput()">Xóa</div>
+      <div class="keyboard-key wide" onclick="enterInput()">Enter</div>
+    </div>
+    <div class="keyboard-row">
+      <div class="keyboard-key space" onclick="hideKeyboard()">Đóng</div>
+    </div>
+  </div>
+
+  <script src="../assets/js/config.js"></script>
+  <script src="../assets/js/api.js"></script>
+  <script src="../assets/js/plc-websocket.js"></script>
+  <script src="../assets/js/script.js"></script>
+  
+  <script>
+    // Virtual keyboard functions cho khung B
+    let currentInput = null;
+    
+    function showKeyboardB() {
+      currentInput = 'B';
+      const keyboard = document.getElementById('keyboard');
+      if (keyboard) {
+        keyboard.style.display = 'block';
+      }
+    }
+
+    // Override các function keyboard để hoạt động với khung B
+    function inputKey(key) {
+      if (currentInput === 'B') {
+        const inputText = document.getElementById('inputValueB');
+        if (inputText) {
+          if (inputText.textContent === 'Nhập số tiền mà quý khách muốn nạp') {
+            inputText.textContent = key;
+          } else {
+            inputText.textContent += key;
+          }
+          inputText.style.color = '#000';
+          
+          // Format số với dấu phẩy
+          const number = parseInt(inputText.textContent.replace(/,/g, ''));
+          if (!isNaN(number)) {
+            inputText.textContent = formatNumber(number);
+          }
+        }
+      }
+    }
+
+    function backspace() {
+      if (currentInput === 'B') {
+        const inputText = document.getElementById('inputValueB');
+        if (inputText && inputText.textContent !== 'Nhập số tiền mà quý khách muốn nạp') {
+          let text = inputText.textContent.replace(/,/g, '');
+          text = text.slice(0, -1);
+          if (text === '') {
+            inputText.textContent = 'Nhập số tiền mà quý khách muốn nạp';
+            inputText.style.color = '#666666';
+          } else {
+            const number = parseInt(text);
+            inputText.textContent = formatNumber(number);
+            inputText.style.color = '#000';
+          }
+        }
+      }
+    }
+
+    function clearInput() {
+      if (currentInput === 'B') {
+        const inputText = document.getElementById('inputValueB');
+        if (inputText) {
+          inputText.textContent = 'Nhập số tiền mà quý khách muốn nạp';
+          inputText.style.color = '#666666';
+        }
+      }
+    }
+
+    function hideKeyboard() {
+      const keyboard = document.getElementById('keyboard');
+      if (keyboard) {
+        keyboard.style.display = 'none';
+      }
+      currentInput = null;
+    }
+
+    // Override enterInput để xử lý cho khung B
+    async function enterInput() {
+      if (currentInput === 'B') {
+        const inputText = document.getElementById('inputValueB');
+        if (inputText && inputText.textContent !== 'Nhập số tiền mà quý khách muốn nạp') {
+          let finalValue = inputText.textContent;
+          console.log('Số tiền đã chốt khung B:', finalValue);
+          
+          // Lưu số tiền vào Store
+          const amount = parseInt(finalValue.replace(/,/g, ''));
+          if (amount && amount >= 10000) {
+            if (Store) {
+              Store.set('paymentAmount', amount);
+              Store.set('selectedKhung', 'B');
+              console.log('💾 Đã lưu Store:', { amount, selectedKhung: 'B' });
+            }
+            
+            // Ẩn bàn phím trước
+            hideKeyboard();
+            
+            try {
+              // Gọi API tạo ticket VNPAY cho khung B
+              const chargePointId = Store.getChargePointId() || 'CP-001';
+              const connectorId = Store.getConnectorId() || 1;
+              
+              const response = await API.createTicket({ 
+                amount, 
+                chargePointId, 
+                connectorId, 
+                paymentMethod: 'vnpay' 
+              });
+              
+              // Hiển thị QR code trong khung B
+              showPaymentQRB(response, amount);
+              
+            } catch (error) {
+              console.error('Lỗi tạo ticket VNPAY:', error);
+              alert('Không tạo được QR VNPAY. Kiểm tra kết nối hoặc backend.');
+            }
+          } else {
+            alert('Số tiền không hợp lệ. Vui lòng nhập số tiền từ 10,000 VND trở lên.');
+          }
+        }
+      }
+    }
+
+    // Hiển thị QR code thực tế từ VNPAY trong khung B
+    function showPaymentQRB(response, amount) {
+      const content = document.querySelector('.khung-b-trong .tttt-content');
+      if (content) {
+        let qrImageUrl = '';
+        
+        // Ưu tiên QR từ backend (VNPAY thực tế)
+        if (response.qrImageDataUrl) {
+          qrImageUrl = response.qrImageDataUrl;
+        } else if (response.payUrl) {
+          qrImageUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(response.payUrl)}`;
+        } else if (response.qrCode) {
+          qrImageUrl = `data:image/png;base64,${response.qrCode}`;
+        } else if (response.qrCodeUrl) {
+          qrImageUrl = response.qrCodeUrl;
+        } else {
+          // Fallback nếu không có QR từ API
+          qrImageUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=VNPAY_${amount}`;
+        }
+        
+        console.log('🎯 QR VNPAY thực tế đã tạo:', qrImageUrl);
+        
+        content.innerHTML = `
+          <h2 class="tttt-title" style="margin-top: -15px; white-space: nowrap; font-size: 16px;">THANH TOÁN VNPAY</h2>
+          <h3 class="tttt-subtitle" style="margin-top: -10px;">Số tiền: ${formatNumber(amount)} VND</h3>
+          <div style="margin: 150px 0; text-align: center;">
+            <img src="${qrImageUrl}" alt="QR VNPAY" style="width: 150px; height: 150px; border: 2px solid #ddd; border-radius: 8px;" />
+          </div>
+          <p style="color: #666; font-size: 14px; margin-top: -130px; text-align: center;">Quét mã QR để thanh toán</p>
+          <button onclick="resetPaymentInputB()" style="background: #6c757d; color: white; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 12px; margin-top: 10px; margin-left: 180px;">Nhập lại</button>
+        `;
+      }
+    }
+
+    // Reset input thanh toán về trạng thái ban đầu trong khung B
+    function resetPaymentInputB() {
+      const content = document.querySelector('.khung-b-trong .tttt-content');
+      if (content) {
+        content.innerHTML = `
+          <h2 class="tttt-title" style="white-space: nowrap; font-size: 16px;">THANH TOÁN TRỰC TIẾP</h2>
+          <h3 class="tttt-subtitle">CHI PHÍ SẠC</h3>
+          <p class="tttt-price">6.000đ/Kwh</p>
+          <div class="input-box" onclick="showKeyboardB()">
+            <span class="input-text" id="inputValueB">Nhập số tiền mà quý khách muốn nạp</span>
+          </div>
+        `;
+        // Xóa paymentAmount khỏi Store
+        if (Store) {
+          Store.del('paymentAmount');
+          Store.del('selectedKhung');
+        }
+      }
+    }
+
+    // Format number with commas
+    function formatNumber(num) {
+      return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+
+    // Kiểm tra nếu có paymentAmount trong Store thì hiển thị QR ngay
+    document.addEventListener('DOMContentLoaded', async function() {
+      const paymentAmount = Store ? Store.get('paymentAmount') : null;
+      const selectedKhung = Store ? Store.get('selectedKhung') : null;
+      
+      console.log('🔍 Kiểm tra Store:', { paymentAmount, selectedKhung });
+      
+      if (paymentAmount) {
+        try {
+          // Gọi API VNPAY thực tế để tạo QR
+          const chargePointId = Store.getChargePointId() || 'CP-001';
+          const connectorId = Store.getConnectorId() || 1;
+          
+          const response = await API.createTicket({ 
+            amount: paymentAmount, 
+            chargePointId, 
+            connectorId, 
+            paymentMethod: 'vnpay' 
+          });
+          
+          // Hiển thị QR code thực tế từ VNPAY
+          showPaymentQRB(response, paymentAmount);
+          
+        } catch (error) {
+          console.error('Lỗi tạo ticket VNPAY:', error);
+          // Fallback: hiển thị QR demo nếu API lỗi
+          const content = document.querySelector('.khung-b-trong .tttt-content');
+          if (content) {
+            content.innerHTML = `
+              <h2 class="tttt-title" style="margin-top: -15px; white-space: nowrap; font-size: 16px;">THANH TOÁN VNPAY</h2>
+              <h3 class="tttt-subtitle" style="margin-top: -10px;">Số tiền: ${formatNumber(paymentAmount)} VND</h3>
+              <div style="margin: 150px 0; text-align: center;">
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=VNPAY_${paymentAmount}" alt="QR VNPAY" style="width: 150px; height: 150px; border: 2px solid #ddd; border-radius: 8px;" />
+              </div>
+              <p style="color: #666; font-size: 14px; margin-top: -130px; text-align: center;">Quét mã QR để thanh toán</p>
+              <button onclick="resetPaymentInputB()" style="background: #6c757d; color: white; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 12px; margin-top: 10px; margin-left: 180px;">Nhập lại</button>
+            `;
+          }
+        }
+      }
+    });
+  </script>
+</body>
+</html>

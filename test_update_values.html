@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Update Values</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .test-box { 
+            border: 2px solid #007bff; 
+            padding: 10px; 
+            margin: 10px; 
+            display: inline-block;
+            min-width: 100px;
+            text-align: center;
+        }
+        button { 
+            padding: 10px 20px; 
+            margin: 5px; 
+            background: #007bff; 
+            color: white; 
+            border: none; 
+            border-radius: 5px; 
+            cursor: pointer; 
+        }
+    </style>
+</head>
+<body>
+    <h1>Test Update Values</h1>
+    
+    <h2>AC Values (Khung A)</h2>
+    <div id="power-ac" class="test-box">0</div>
+    <div id="energy-ac" class="test-box">0</div>
+    <div id="kwh-ac" class="test-box">0</div>
+    
+    <h2>DC Values (Khung B)</h2>
+    <div id="voltage" class="test-box">0</div>
+    <div id="current" class="test-box">0</div>
+    <div id="power" class="test-box">0</div>
+    <div id="energy" class="test-box">0</div>
+    <div id="battery-percent" class="test-box">0</div>
+    <div id="kwh-dc" class="test-box">0</div>
+    
+    <br><br>
+    <button onclick="testUpdateValues()">Test Update Values</button>
+    <button onclick="testWithRealData()">Test With Real Data</button>
+    <button onclick="clearValues()">Clear Values</button>
+    
+    <script>
+        // Copy hàm updateValue từ plc-websocket.js
+        function updateValue(elementId, value) {
+            const element = document.getElementById(elementId);
+            if (element) {
+                // Kiểm tra giá trị hợp lệ trước khi format
+                if (value === null || value === undefined || isNaN(value) || value === '') {
+                    // Hiển thị 0 hoặc dấu gạch ngang nếu không có dữ liệu
+                    element.textContent = '0';
+                    console.log(`🔧 ${elementId}: Set to 0 (invalid value: ${value})`);
+                    return;
+                }
+                
+                // Format số dựa trên loại dữ liệu
+                let formattedValue = value;
+                
+                if (elementId === 'battery-percent') {
+                    formattedValue = Math.round(value) + '%';
+                } else if (elementId === 'voltage' || elementId === 'current') {
+                    formattedValue = value.toFixed(1);
+                } else if (elementId.includes('power') || elementId.includes('energy') || elementId.includes('kwh')) {
+                    formattedValue = Math.round(value);
+                } else {
+                    formattedValue = value.toFixed(1);
+                }
+                
+                element.textContent = formattedValue;
+                console.log(`✅ ${elementId}: Updated to ${formattedValue} (original: ${value})`);
+            } else {
+                console.log(`❌ Element not found: ${elementId}`);
+            }
+        }
+        
+        function testUpdateValues() {
+            console.log('🧪 Testing update values...');
+            
+            // Test AC values
+            updateValue('power-ac', 500);
+            updateValue('energy-ac', 350);
+            updateValue('kwh-ac', 300);
+            
+            // Test DC values
+            updateValue('voltage', 400);
+            updateValue('current', 15);
+            updateValue('power', 6000);
+            updateValue('energy', 1800);
+            updateValue('battery-percent', 85);
+            updateValue('kwh-dc', 1.8);
+        }
+        
+        function testWithRealData() {
+            console.log('🧪 Testing with real data from PLC...');
+            
+            // Dữ liệu thực từ PLC log
+            const realData = {
+                powerAC: 500,
+                energyAC: 350,
+                kwhAC: 300,
+                voltageDC: 0,
+                currentDC: 0,
+                powerDC: 0,
+                energyDC: 0,
+                socDC: 0,
+                kwhDC: 0
+            };
+            
+            // Cập nhật AC values
+            updateValue('power-ac', realData.powerAC);
+            updateValue('energy-ac', realData.energyAC);
+            updateValue('kwh-ac', realData.kwhAC);
+            
+            // Cập nhật DC values
+            updateValue('voltage', realData.voltageDC);
+            updateValue('current', realData.currentDC);
+            updateValue('power', realData.powerDC);
+            updateValue('energy', realData.energyDC);
+            updateValue('battery-percent', realData.socDC);
+            updateValue('kwh-dc', realData.kwhDC);
+        }
+        
+        function clearValues() {
+            console.log('🧹 Clearing all values...');
+            
+            const elementIds = ['power-ac', 'energy-ac', 'kwh-ac', 'voltage', 'current', 'power', 'energy', 'battery-percent', 'kwh-dc'];
+            elementIds.forEach(id => {
+                updateValue(id, 0);
+            });
+        }
+    </script>
+</body>
+</html>
+
+

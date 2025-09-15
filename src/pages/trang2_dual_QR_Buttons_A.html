@@ -32,6 +32,27 @@
       height: 71.5%;
       z-index: 10;
     }
+
+    /* DEBUG: Đảm bảo nút clickable */
+    .khung-buttons {
+      z-index: 99999 !important;
+      pointer-events: auto !important;
+    }
+    
+    .khung-button {
+      z-index: 99999 !important;
+      pointer-events: auto !important;
+      position: relative !important;
+      cursor: pointer !important;
+    }
+
+    /* DEBUG: Màu nền nút để dễ thấy */
+    .test-button {
+      background: red !important;
+      border: 3px solid yellow !important;
+      z-index: 99999 !important;
+      pointer-events: auto !important;
+    }
   </style>
 </head>
 <body data-page="trang2_dual_TTTT_Buttons_A">
@@ -58,7 +79,7 @@
       <div class="khung-b-trong">
         <img src="../assets/images/khung_trong.png" alt="Khung B trống" />
         <div class="khung-buttons" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 10;">
-          <button class="khung-button" onclick="showPaymentInputA()" style="background: #28a745; color: white; border: none; padding: 12px 20px; border-radius: 8px; cursor: pointer; font-size: 16px; margin: 8px; display: block; width: 200px;">Sạc thanh toán trực tiếp</button>
+          <button class="khung-button test-button" onclick="navigateToQRTTTT()" style="background: #28a745; color: white; border: none; padding: 12px 20px; border-radius: 8px; cursor: pointer; font-size: 16px; margin: 8px; display: block; width: 200px;">Sạc thanh toán trực tiếp</button>
           <button class="khung-button" data-goto="trang2_2_app.html" style="background: #007bff; color: white; border: none; padding: 12px 20px; border-radius: 8px; cursor: pointer; font-size: 16px; margin: 8px; display: block; width: 200px;">Sạc qua app Rabbit EVC</button>
         </div>
       </div>
@@ -97,66 +118,69 @@
   <script src="../assets/js/script.js"></script>
   
   <script>
-    // Trạng thái ban đầu: khung A có nút, khung B có form TTTT
+    // Trạng thái ban đầu: khung A có QR, khung B có nút
     document.addEventListener('DOMContentLoaded', function() {
-      // Luôn hiển thị trạng thái ban đầu: khung A có nút, khung B có form TTTT
+      // Hiển thị QR từ Store trong khung A, nút trong khung B
+      showQRFromStore();
       swapContentForButtonsA();
     });
 
-    // Hoán đổi nội dung: khung A có nút, khung B có form TTTT
+    // Hoán đổi nội dung: khung A có QR, khung B có nút
     function swapContentForButtonsA() {
-      // Khung A: hiển thị 2 nút
-      const khungA = document.querySelector('.khung-a-trong .tttt-content');
-      if (khungA) {
-        khungA.innerHTML = `
-          <div class="khung-buttons" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 10;">
-            <button class="khung-button" onclick="showPaymentInputA()" style="background: #28a745; color: white; border: none; padding: 12px 20px; border-radius: 8px; cursor: pointer; font-size: 16px; margin: 8px; display: block; width: 200px;">Sạc thanh toán trực tiếp</button>
-            <button class="khung-button" data-goto="trang2_2_app.html" style="background: #007bff; color: white; border: none; padding: 12px 20px; border-radius: 8px; cursor: pointer; font-size: 16px; margin: 8px; display: block; width: 200px;">Sạc qua app Rabbit EVC</button>
-          </div>
-        `;
-      }
+      // Khung A: QR sẽ được hiển thị bởi showQRFromStore()
+      // Không cần làm gì ở đây vì QR đã được hiển thị
       
-      // Khung B: hiển thị form TTTT đẹp như trang2_2_TTTT
+      // Khung B: hiển thị 2 nút
       const khungB = document.querySelector('.khung-b-trong');
       if (khungB) {
         // Xóa nội dung cũ
-        const oldContent = khungB.querySelector('.khung-buttons');
+        const oldContent = khungB.querySelector('.tttt-content');
         if (oldContent) {
           oldContent.remove();
         }
         
-        // Thêm nội dung mới với cấu trúc đẹp
+        // Thêm nút vào khung B
         const newContent = document.createElement('div');
-        newContent.className = 'tttt-content';
+        newContent.className = 'khung-buttons';
         newContent.style.cssText = 'position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 10;';
         newContent.innerHTML = `
-          <h2 class="tttt-title">THANH TOÁN TRỰC TIẾP</h2>
-          <h3 class="tttt-subtitle">CHI PHÍ SẠC</h3>
-          <p class="tttt-price">6.000đ/Kwh</p>
-          <div class="input-box" onclick="showKeyboardB()">
-            <span class="input-text" id="inputValueB">Nhập số tiền mà quý khách muốn nạp</span>
-          </div>
+          <button class="khung-button" onclick="navigateToQRTTTT()" style="background: #28a745; color: white; border: none; padding: 12px 20px; border-radius: 8px; cursor: pointer; font-size: 16px; margin: 8px; display: block; width: 200px;">Sạc thanh toán trực tiếp</button>
+          <button class="khung-button" data-goto="trang2_2_app.html" style="background: #007bff; color: white; border: none; padding: 12px 20px; border-radius: 8px; cursor: pointer; font-size: 16px; margin: 8px; display: block; width: 200px;">Sạc qua app Rabbit EVC</button>
         `;
         khungB.appendChild(newContent);
       }
     }
 
     // Hiển thị QR từ Store
-    async function showQRFromStore(amount) {
+    async function showQRFromStore() {
       try {
+        // Lấy paymentAmount từ Store
+        const paymentAmount = Store ? Store.get('paymentAmount') : null;
+        const selectedKhung = Store ? Store.get('selectedKhung') : null;
+        
+        if (!paymentAmount) {
+          console.log('Không có paymentAmount trong Store');
+          return;
+        }
+        
+        if (selectedKhung !== 'A') {
+          console.log('QR không thuộc khung A, selectedKhung:', selectedKhung);
+          return;
+        }
+        
         // Gọi API tạo ticket VNPAY
         const chargePointId = Store.getChargePointId() || 'CP-001';
         const connectorId = Store.getConnectorId() || 1;
         
         const response = await API.createTicket({ 
-          amount: parseInt(amount), 
+          amount: parseInt(paymentAmount), 
           chargePointId, 
           connectorId, 
           paymentMethod: 'vnpay' 
         });
         
         // Hiển thị QR code trong khung A
-        showPaymentQRA(response, parseInt(amount));
+        showPaymentQRA(response, parseInt(paymentAmount));
         
       } catch (error) {
         console.error('Lỗi tạo ticket VNPAY:', error);
@@ -335,7 +359,7 @@
 
     function resetPaymentInputB() {
       // Xóa paymentAmount khỏi Store
-      Store.remove('paymentAmount');
+      Store.del('paymentAmount');
       
       // Hiển thị lại form nhập tiền
       const content = document.querySelector('.khung-b-trong .tttt-content');
@@ -573,6 +597,75 @@
     function showPaymentInputA() {
       // Chuyển sang trang thanh toán TTTT dual
       window.location.href = 'trang2_dual_TTTT.html';
+    }
+
+    // Navigation tới trang QR + TTTT với debug trực quan
+    function navigateToQRTTTT() {
+      // Hiển thị thông báo trên màn hình
+      showVisualDebug('🔄 Nhấn nút thành công!');
+      
+      console.log('🔄 Nhấn nút "Sạc thanh toán trực tiếp" ở khung B');
+      console.log('🔄 Chuyển đến: trang2_dual_QR_TTTT.html');
+      
+      try {
+        // Hiển thị thông báo đang chuyển trang
+        showVisualDebug('🔄 Đang chuyển trang...', 1000);
+        
+        // Chuyển trang sau 1 giây
+        setTimeout(() => {
+          window.location.href = 'trang2_dual_QR_TTTT.html';
+        }, 1000);
+        
+        console.log('✅ Navigation initiated');
+      } catch (error) {
+        console.error('❌ Navigation error:', error);
+        showVisualDebug('❌ Lỗi chuyển trang: ' + error.message, 3000);
+        
+        // Fallback navigation
+        setTimeout(() => {
+          window.location.href = 'trang2_dual_QR_TTTT.html';
+        }, 2000);
+      }
+    }
+
+    // Function hiển thị debug trực quan trên màn hình
+    function showVisualDebug(message, duration = 2000) {
+      // Xóa thông báo cũ
+      const oldDebug = document.getElementById('visual-debug');
+      if (oldDebug) {
+        oldDebug.remove();
+      }
+
+      // Tạo thông báo mới
+      const debugDiv = document.createElement('div');
+      debugDiv.id = 'visual-debug';
+      debugDiv.style.cssText = `
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: rgba(0,0,0,0.9);
+        color: #00ff00;
+        padding: 20px 30px;
+        border-radius: 10px;
+        font-family: monospace;
+        font-size: 18px;
+        z-index: 99999;
+        border: 3px solid #00ff00;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.8);
+        text-align: center;
+        min-width: 300px;
+      `;
+      
+      debugDiv.textContent = message;
+      document.body.appendChild(debugDiv);
+
+      // Tự động xóa sau thời gian quy định
+      setTimeout(() => {
+        if (debugDiv.parentNode) {
+          debugDiv.remove();
+        }
+      }, duration);
     }
   </script>
 </body>

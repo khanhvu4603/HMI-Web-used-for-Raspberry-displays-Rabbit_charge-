@@ -178,7 +178,7 @@
       if (amount && parseInt(amount) >= 10000) {
         // Lưu thông tin thanh toán
         Store.set('paymentAmount', parseInt(amount));
-        Store.set('selectedKhung', 'A');
+        Store.set('selectedKhung', 'B');
         
         // Chuyển sang trang thanh toán
         window.location.href = 'trang2_1_TTTT.html';
@@ -258,7 +258,7 @@
       try {
         // Lưu thông tin thanh toán
         Store.set('paymentAmount', amount);
-        Store.set('selectedKhung', 'A');
+        Store.set('selectedKhung', 'B');
         
         // Gọi API tạo ticket VNPAY
         const chargePointId = Store.getChargePointId() || 'CP-001';

@@ -11,6 +11,12 @@
     <!-- ẢNH TRANG 2.2 TTTT: đổi src theo ảnh của bạn -->
     <img class="slide-img" src="../assets/images/trang2_2_TTTT.jpg" alt="Trang 2.2 TTTT" />
     
+    <!-- Khung A trống với PLC control -->
+    <div class="khung-a-trong">
+      <img src="../assets/images/khungA.jpg" alt="Khung A" />
+      <div class="tttt-content"></div>
+    </div>
+
     <!-- Khung B trống (có nút chuyển đổi) -->
     <div class="khung-b-trong">
       <img src="../assets/images/khung_trong.png" alt="Khung B trống" />
@@ -54,6 +60,43 @@
 
   <script src="../assets/js/config.js"></script>
   <script src="../assets/js/api.js"></script>
+  <script src="../assets/js/plc-websocket.js"></script>
   <script src="../assets/js/script.js"></script>
+  
+  <script>
+    // Override để QR hiện trong khung B
+    function showPaymentQR(response, amount) {
+      const content = document.querySelector('.khung-b-trong .tttt-content');
+      if (content) {
+        let qrImageUrl = response.qrImageDataUrl || 
+          `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(response.payUrl || 'VNPAY_' + amount)}`;
+        
+        content.innerHTML = `
+          <h2 class="tttt-title" style="margin-top: -15px;">THANH TOÁN VNPAY</h2>
+          <h3 class="tttt-subtitle" style="margin-top: -10px;">Số tiền: ${formatNumber(amount)} VND</h3>
+          <div style="margin: 150px 0; margin-left: 140px;">
+            <img src="${qrImageUrl}" alt="QR VNPAY" style="width: 190px; height: 190px; border: 2px solid #ddd; border-radius: 8px;" />
+          </div>
+          <p style="color: #666; font-size: 14px; margin-top: -130px; margin-bottom: 15px; margin-left: 150px;">Quét mã QR để thanh toán</p>
+          <button onclick="resetPaymentInput()" style="background: #6c757d; color: white; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-size: 14px; margin-left: 190px;">Nhập lại</button>
+        `;
+        if (response.ticketId) startPaymentPolling(response.ticketId);
+      }
+    }
+
+    function resetPaymentInput() {
+      const content = document.querySelector('.khung-b-trong .tttt-content');
+      if (content) {
+        content.innerHTML = `
+          <h2 class="tttt-title">THANH TOÁN TRỰC TIẾP</h2>
+          <h3 class="tttt-subtitle">CHI PHÍ SẠC</h3>
+          <p class="tttt-price">6.000đ/Kwh</p>
+          <div class="input-box" onclick="showKeyboard()">
+            <span class="input-text" id="inputValue">Nhập số tiền mà quý khách muốn nạp</span>
+          </div>
+        `;
+      }
+    }
+  </script>
 </body>
 </html>

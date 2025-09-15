@@ -21,6 +21,7 @@
         <div class="input-box" onclick="showKeyboardA()">
           <span class="input-text" id="inputValueA">Nhập số tiền mà quý khách muốn nạp</span>
         </div>
+        <button class="khung-button" onclick="window.location.href='trang2_dual_TTTT.html'" style="background: #28a745; color: white; border: none; padding: 12px 20px; border-radius: 8px; cursor: pointer; font-size: 16px; margin: 8px; display: block; width: 200px; margin-top: 15px;">Sạc thanh toán trực tiếp</button>
       </div>
     </div>
 
@@ -331,7 +332,7 @@
 
     function resetPaymentInputB() {
       // Xóa paymentAmount khỏi Store
-      Store.remove('paymentAmount');
+      Store.del('paymentAmount');
       
       // Hiển thị lại form nhập tiền
       const content = document.querySelector('.khung-b-trong .tttt-content');

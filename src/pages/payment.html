@@ -293,7 +293,16 @@
         const chargePointId = (window.Store && Store.getChargePointId) ? Store.getChargePointId() : 'CP-001';
         const connectorId   = (window.Store && Store.getConnectorId)   ? Store.getConnectorId()   : 1;
 
-        if (window.Store && Store.set) Store.set('paymentAmount', amount);
+        if (window.Store && Store.set) {
+          Store.set('paymentAmount', amount);
+          // Set selectedKhung dựa trên trang hiện tại
+          const currentPage = window.location.pathname.split('/').pop();
+          if (currentPage.includes('2_1') || currentPage.includes('A')) {
+            Store.set('selectedKhung', 'A');
+          } else if (currentPage.includes('2_2') || currentPage.includes('B')) {
+            Store.set('selectedKhung', 'B');
+          }
+        }
 
         // Gọi API tạo ticket VNPAY với paymentMethod mặc định là 'vnpay'
         const r = await API.createTicket({ amount, chargePointId, connectorId, paymentMethod: 'vnpay' });
